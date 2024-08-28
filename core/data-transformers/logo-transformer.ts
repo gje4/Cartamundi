@@ -1,6 +1,6 @@
 import { ResultOf } from 'gql.tada';
 
-import { StoreLogoFragment } from '~/components/header';
+import { StoreLogoFragment } from '~/components/store-logo';
 
 export const logoTransformer = (data: ResultOf<typeof StoreLogoFragment>) => {
   const { logoV2: logo } = data;

@@ -2,7 +2,7 @@ import { removeEdgesAndNodes } from '@bigcommerce/catalyst-client';
 import { cache } from 'react';
 
 import { getSessionCustomerId } from '~/auth';
-import { ProductCardFragment } from '~/components/featured-products-carousel';
+import { ProductCardFragment } from '~/components/product-card';
 
 import { client } from '..';
 import { PAGE_DETAILS_FRAGMENT } from '../fragments/page-details';
@@ -10,7 +10,7 @@ import { graphql, VariablesOf } from '../graphql';
 import { revalidate } from '../revalidate-target';
 
 const GET_PRODUCT_SEARCH_RESULTS_QUERY = graphql(
-  `
+    `
     query getProductSearchResults(
       $first: Int
       $last: Int
@@ -150,7 +150,7 @@ const GET_PRODUCT_SEARCH_RESULTS_QUERY = graphql(
       }
     }
   `,
-  [PAGE_DETAILS_FRAGMENT, ProductCardFragment],
+    [PAGE_DETAILS_FRAGMENT, ProductCardFragment],
 );
 
 type Variables = VariablesOf<typeof GET_PRODUCT_SEARCH_RESULTS_QUERY>;
@@ -166,65 +166,65 @@ interface ProductSearch {
 }
 
 export const getProductSearchResults = cache(
-  async ({ limit = 9, after, before, sort, filters }: ProductSearch) => {
-    const customerId = await getSessionCustomerId();
-    const filterArgs = { filters, sort };
-    const paginationArgs = before ? { last: limit, before } : { first: limit, after };
+    async ({ limit = 9, after, before, sort, filters }: ProductSearch) => {
+      const customerId = await getSessionCustomerId();
+      const filterArgs = { filters, sort };
+      const paginationArgs = before ? { last: limit, before } : { first: limit, after };
 
-    const response = await client.fetch({
-      document: GET_PRODUCT_SEARCH_RESULTS_QUERY,
-      variables: { ...filterArgs, ...paginationArgs },
-      customerId,
-      fetchOptions: customerId ? { cache: 'no-store' } : { next: { revalidate: 300 } },
-    });
+      const response = await client.fetch({
+        document: GET_PRODUCT_SEARCH_RESULTS_QUERY,
+        variables: { ...filterArgs, ...paginationArgs },
+        customerId,
+        fetchOptions: customerId ? { cache: 'no-store' } : { next: { revalidate: 300 } },
+      });
 
-    const { site } = response.data;
+      const { site } = response.data;
 
-    const searchResults = site.search.searchProducts;
+      const searchResults = site.search.searchProducts;
 
-    const items = removeEdgesAndNodes(searchResults.products).map((product) => ({
-      ...product,
-      fetchOptions: { next: { revalidate } },
-    }));
+      const items = removeEdgesAndNodes(searchResults.products).map((product) => ({
+        ...product,
+        fetchOptions: { next: { revalidate } },
+      }));
 
-    return {
-      facets: {
-        items: removeEdgesAndNodes(searchResults.filters).map((node) => {
-          switch (node.__typename) {
-            case 'BrandSearchFilter':
-              return {
-                ...node,
-                brands: removeEdgesAndNodes(node.brands),
-              };
+      return {
+        facets: {
+          items: removeEdgesAndNodes(searchResults.filters).map((node) => {
+            switch (node.__typename) {
+              case 'BrandSearchFilter':
+                return {
+                  ...node,
+                  brands: removeEdgesAndNodes(node.brands),
+                };
 
-            case 'CategorySearchFilter':
-              return {
-                ...node,
-                categories: removeEdgesAndNodes(node.categories),
-              };
+              case 'CategorySearchFilter':
+                return {
+                  ...node,
+                  categories: removeEdgesAndNodes(node.categories),
+                };
 
-            case 'ProductAttributeSearchFilter':
-              return {
-                ...node,
-                attributes: removeEdgesAndNodes(node.attributes),
-              };
+              case 'ProductAttributeSearchFilter':
+                return {
+                  ...node,
+                  attributes: removeEdgesAndNodes(node.attributes),
+                };
 
-            case 'RatingSearchFilter':
-              return {
-                ...node,
-                ratings: removeEdgesAndNodes(node.ratings),
-              };
+              case 'RatingSearchFilter':
+                return {
+                  ...node,
+                  ratings: removeEdgesAndNodes(node.ratings),
+                };
 
-            default:
-              return node;
-          }
-        }),
-      },
-      products: {
-        collectionInfo: searchResults.products.collectionInfo,
-        pageInfo: searchResults.products.pageInfo,
-        items,
-      },
-    };
-  },
+              default:
+                return node;
+            }
+          }),
+        },
+        products: {
+          collectionInfo: searchResults.products.collectionInfo,
+          pageInfo: searchResults.products.pageInfo,
+          items,
+        },
+      };
+    },
 );

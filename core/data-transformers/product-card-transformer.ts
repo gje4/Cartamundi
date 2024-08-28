@@ -8,16 +8,16 @@ import { Product } from '~/components/ui/product-card';
 import { pricesTransformer } from './prices-transformer';
 
 export const productCardTransformer = (
-  product: ResultOf<typeof ProductCardFragment>,
-  format: ExistingResultType<typeof getFormatter>,
+    product: ResultOf<typeof ProductCardFragment>,
+    format: ExistingResultType<typeof getFormatter>,
 ): Product => ({
-  id: product.entityId.toString(),
-  name: product.name,
-  href: product.path,
-  image: product.defaultImage
-    ? { src: product.defaultImage.url, altText: product.defaultImage.altText }
-    : undefined,
-  price: pricesTransformer(product.prices, format),
-  subtitle: product.brand?.name ?? undefined,
-  badge: 'new',
+    id: product.entityId.toString(),
+    name: product.name,
+    href: product.path,
+    image: product.defaultImage
+        ? { src: product.defaultImage.url, altText: product.defaultImage.altText }
+        : undefined,
+    price: pricesTransformer(product.prices, format),
+    subtitle: product.brand?.name ?? undefined,
+    badge: 'new',
 });
