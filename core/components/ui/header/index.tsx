@@ -111,16 +111,20 @@ export const Header = forwardRef(function Header(
         transition: 'transform .5s ease-in-out',
       }}
     >
+      <div className="flex items-center gap-[24px] px-[20px] py-[6px] bg-[#000] text-[#fff]">
+        <span>You are shopping with:</span>
+        <span>Milan Stankovic</span>
+      </div>
       <div
         ref={ref}
         onMouseLeave={() => setNavOpen(false)}
-        className="relative mx-auto w-full max-w-screen-2xl text-foreground @4xl:mx-[max(20px,auto)] @4xl:mt-5"
+        className="relative mx-auto w-full text-foreground @4xl:mx-[max(20px,auto)] max-w-[100%]"
       >
         <nav
           className="grid h-[60px] grid-cols-[1fr,auto,1fr] items-center justify-between bg-background shadow-[2px_4px_24px_#00000010] 
-          @4xl:mx-5 @4xl:rounded-[24px]"
+          @4xl:mx-5 @4xl:rounded-[24px] !rounded-[0px] !mx-[0px] px-[20px]"
         >
-          <div className="relative flex items-stretch pl-2.5" ref={container}>
+          <div className="relative flex items-stretch" ref={container}>
             {links?.map((item, i) => (
               <CustomLink
                 key={i}
@@ -130,7 +134,7 @@ export const Header = forwardRef(function Header(
                   setNavOpen(true)
                   setSearchOpen(false)
                 }}
-                className="relative mx-0.5 my-2.5 hidden items-center rounded-xl p-2.5 text-sm font-medium ring-primary transition-colors duration-200 
+                className="relative mx-0.5 py-2.5 hidden items-center rounded-xl px-[0px] text-sm font-medium ring-primary transition-colors duration-200
                   hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
               >
                 {item.label}
@@ -153,7 +157,7 @@ export const Header = forwardRef(function Header(
             )}
           </CustomLink>
 
-          <div className="ml-auto flex items-center gap-2 pr-3 transition-colors duration-300 @4xl:pr-2.5">
+          <div className="ml-auto flex items-center gap-2 transition-colors duration-300">
             <div className="absolute left-3 flex items-center @4xl:relative @4xl:left-0">
               {/* Hamburger Menu Button */}
               <button

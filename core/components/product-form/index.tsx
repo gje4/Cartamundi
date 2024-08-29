@@ -2,7 +2,7 @@
 
 import { removeEdgesAndNodes } from '@bigcommerce/catalyst-client';
 import { AlertCircle, Check, Heart, ShoppingCart } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import {useFormatter, useTranslations} from 'next-intl';
 import { FormProvider, useFormContext } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
@@ -64,7 +64,9 @@ export const ProductForm = ({ data: product }: Props) => {
   const productOptions = removeEdgesAndNodes(product.productOptions);
 
   const { handleSubmit, register, ...methods } = useProductForm();
-
+  const format = useFormatter();
+  const showPriceRange =
+      product.prices?.priceRange.min.value !== product.prices?.priceRange.max.value;
   const productFormSubmit = async (data: ProductFormData) => {
     const result = await handleAddToCart(data, product);
     const quantity = Number(data.quantity);
@@ -147,9 +149,76 @@ export const ProductForm = ({ data: product }: Props) => {
           return null;
         })}
 
-        <QuantityField />
+        <div className="flex gap-[24px]">
+          <QuantityField />
+          {product.prices && (
+              <div className="grid">
+                <span className="mb-2 block font-semibold">Price</span>
+                <div className="text-[24px] font-bold leading-[1.2] flex items-end">
+                  {showPriceRange ? (
+                      <span>
+              {format.number(product.prices.priceRange.min.value, {
+                style: 'currency',
+                currency: product.prices.price.currencyCode,
+              })}{' '}-{' '}
+                        {format.number(product.prices.priceRange.max.value, {
+                          style: 'currency',
+                          currency: product.prices.price.currencyCode,
+                        })}
+            </span>
+                  ) : (
+                      <>
+                        {product.prices.retailPrice?.value !== undefined && (
+                            <span>
+                  {t('Prices.msrp')}:{' '}
+                              <span className="line-through">
+                    {format.number(product.prices.retailPrice.value, {
+                      style: 'currency',
+                      currency: product.prices.price.currencyCode,
+                    })}
+                  </span>
+                  <br/>
+                </span>
+                        )}
+                        {product.prices.salePrice?.value !== undefined &&
+                        product.prices.basePrice?.value !== undefined ? (
+                            <>
+                  <span>
+                    {t('Prices.was')}:{' '}
+                    <span className="line-through">
+                      {format.number(product.prices.basePrice.value, {
+                        style: 'currency',
+                        currency: product.prices.price.currencyCode,
+                      })}
+                    </span>
+                  </span>
+                              <br/>
+                              <span>
+                    {t('Prices.now')}:{' '}
+                                {format.number(product.prices.price.value, {
+                                  style: 'currency',
+                                  currency: product.prices.price.currencyCode,
+                                })}
+                    </span>
+                            </>
+                        ) : (
+                            product.prices.price.value && (
+                                <span>
+                    {format.number(product.prices.price.value, {
+                      style: 'currency',
+                      currency: product.prices.price.currencyCode,
+                    })}
+                  </span>
+                            )
+                        )}
+                      </>
+                  )}
+                </div>
+              </div>
+          )}
+        </div>
 
-        <div className="mt-4 flex flex-col gap-4 @md:flex-row">
+        <div className="st_equal-col mt-4 flex flex-col gap-4 @md:flex-row">
           <Submit data={product} />
 
           {/* NOT IMPLEMENTED YET */}

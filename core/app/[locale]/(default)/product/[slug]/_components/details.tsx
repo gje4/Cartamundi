@@ -18,6 +18,7 @@ export const DetailsFragment = graphql(
       ...ProductItemFragment
       entityId
       name
+      description
       sku
       upc
       minPurchaseQuantity
@@ -78,88 +79,35 @@ export const Details = ({ product }: Props) => {
   const t = useTranslations('Product.Details');
   const format = useFormatter();
 
-  const customFields = removeEdgesAndNodes(product.customFields);
-
-  const showPriceRange =
-    product.prices?.priceRange.min.value !== product.prices?.priceRange.max.value;
-
   return (
-    <div>
-      {product.brand && (
-        <p className="mb-2 font-semibold uppercase text-gray-500">{product.brand.name}</p>
-      )}
-
-      <h1 className="mb-4 text-4xl font-black lg:text-5xl">{product.name}</h1>
-
-      <ReviewSummary data={product} />
-
-      {product.prices && (
-        <div className="my-6 text-2xl font-bold lg:text-3xl">
-          {showPriceRange ? (
-            <span>
-              {format.number(product.prices.priceRange.min.value, {
-                style: 'currency',
-                currency: product.prices.price.currencyCode,
-              })}{' '}
-              -{' '}
-              {format.number(product.prices.priceRange.max.value, {
-                style: 'currency',
-                currency: product.prices.price.currencyCode,
-              })}
-            </span>
-          ) : (
-            <>
-              {product.prices.retailPrice?.value !== undefined && (
-                <span>
-                  {t('Prices.msrp')}:{' '}
-                  <span className="line-through">
-                    {format.number(product.prices.retailPrice.value, {
-                      style: 'currency',
-                      currency: product.prices.price.currencyCode,
-                    })}
-                  </span>
-                  <br />
-                </span>
-              )}
-              {product.prices.salePrice?.value !== undefined &&
-              product.prices.basePrice?.value !== undefined ? (
-                <>
-                  <span>
-                    {t('Prices.was')}:{' '}
-                    <span className="line-through">
-                      {format.number(product.prices.basePrice.value, {
-                        style: 'currency',
-                        currency: product.prices.price.currencyCode,
-                      })}
-                    </span>
-                  </span>
-                  <br />
-                  <span>
-                    {t('Prices.now')}:{' '}
-                    {format.number(product.prices.price.value, {
-                      style: 'currency',
-                      currency: product.prices.price.currencyCode,
-                    })}
-                  </span>
-                </>
-              ) : (
-                product.prices.price.value && (
-                  <span>
-                    {format.number(product.prices.price.value, {
-                      style: 'currency',
-                      currency: product.prices.price.currencyCode,
-                    })}
-                  </span>
-                )
-              )}
-            </>
+      <div>
+          {Boolean(product.sku) && (
+              <div className="pb-[10px]">
+                  <h3 className="font-semibold">{t('sku')}</h3>
+                  <p>{product.sku}</p>
+              </div>
           )}
-        </div>
-      )}
+          {Boolean(product.weight) && (
+              <div>
+                  <h3 className="font-semibold">{t('weight')}</h3>
+                  <p>
+                      {product.weight?.value} {product.weight?.unit}
+                  </p>
+              </div>
+          )}
+          {product.brand && (
+              <p className="font-semibold uppercase text-gray-500 pt-[6px]">{product.brand.name}</p>
+          )}
 
-      <ProductForm data={product} />
+          <h1 className="st_title text-[30px] mt-[10px]">{product.name}</h1>
 
-      <div className="my-12">
+          <ReviewSummary data={product}/>
+
+          <div className="py-[10px]" dangerouslySetInnerHTML={{__html: product.description}}/>
+
+          <ProductForm data={product}/>
+
+          {/*<div className="my-12">
         <h2 className="mb-4 text-xl font-bold md:text-2xl">{t('additionalDetails')}</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {Boolean(product.sku) && (
@@ -214,8 +162,8 @@ export const Details = ({ product }: Props) => {
               </div>
             ))}
         </div>
+      </div>*/}
+          <ProductSchema product={product}/>
       </div>
-      <ProductSchema product={product} />
-    </div>
   );
 };

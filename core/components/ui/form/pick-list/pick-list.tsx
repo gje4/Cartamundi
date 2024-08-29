@@ -29,7 +29,7 @@ const PickList = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, Props>(
 
     return (
       <RadioGroupPrimitive.Root
-        className={cn('grid auto-rows-fr divide-y divide-solid divide-gray-200 border', className)}
+        className={cn('st_radio-buttons--wrapper grid auto-rows-fr divide-y divide-solid divide-gray-200 border', className)}
         ref={ref}
         {...props}
       >

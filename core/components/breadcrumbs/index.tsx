@@ -27,5 +27,5 @@ export const Breadcrumbs = ({ category }: Props) => {
     href: path ?? '#',
   }));
 
-  return <ComponentsBreadcrumbs breadcrumbs={breadcrumbs} />;
+  return <ComponentsBreadcrumbs breadcrumbs={breadcrumbs} className='mt-[6rem] px-[20px]' />;
 };
