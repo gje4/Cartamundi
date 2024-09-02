@@ -18,6 +18,14 @@ export const ProductItemFragment = graphql(
       brand {
         name
       }
+      customFields {
+        edges {
+          node {
+            name
+            value
+          }
+        }
+      }
       prices {
         priceRange {
           min {

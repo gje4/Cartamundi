@@ -83,6 +83,9 @@ export default async function Product({ params, searchParams }: ProductPageProps
 
   const category = removeEdgesAndNodes(product.categories).at(0);
 
+  const customFields = removeEdgesAndNodes(product.customFields);
+
+  console.log("custom fields in single product: ", customFields);
   return (
     <>
       {category && <Breadcrumbs category={category} />}
