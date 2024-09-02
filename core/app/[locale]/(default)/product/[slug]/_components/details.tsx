@@ -82,29 +82,26 @@ export const Details = ({ product }: Props) => {
   return (
       <div>
           {Boolean(product.sku) && (
-              <div className="pb-[10px]">
-                  <h3 className="font-semibold">{t('sku')}</h3>
+              <div className="flex items-center gap-[6px] pb-[4px]">
+                  <h3 className="font-normal">{t('sku')}:</h3>
                   <p>{product.sku}</p>
               </div>
           )}
-          {Boolean(product.weight) && (
+          {/*{Boolean(product.weight) && (
               <div>
                   <h3 className="font-semibold">{t('weight')}</h3>
                   <p>
                       {product.weight?.value} {product.weight?.unit}
                   </p>
               </div>
-          )}
+          )}*/}
+
+          <h1 className="st_title text-[30px] leading-[1.3]">{product.name}</h1>
           {product.brand && (
-              <p className="font-semibold uppercase text-gray-500 pt-[6px]">{product.brand.name}</p>
+              <p className="font-semibold uppercase text-gray-500">{product.brand.name}</p>
           )}
-
-          <h1 className="st_title text-[30px] mt-[10px]">{product.name}</h1>
-
           <ReviewSummary data={product}/>
-
-          <div className="py-[10px]" dangerouslySetInnerHTML={{__html: product.description}}/>
-
+          <div className="my-[10px]" dangerouslySetInnerHTML={{__html: product.description}}/>
           <ProductForm data={product}/>
 
           {/*<div className="my-12">

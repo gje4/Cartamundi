@@ -94,13 +94,13 @@ export default async function Product({ params, searchParams }: ProductPageProps
         >
           <Gallery noImageText={t('noGalleryText')} product={product} />
           <Details product={product} />
-          <div className="lg:col-span-2">
+          {/*<div className="lg:col-span-2">
             <Description product={product} />
             <Warranty product={product} />
             <Suspense fallback={t('loading')}>
               <Reviews productId={product.entityId} />
             </Suspense>
-          </div>
+          </div>*/}
         </NextIntlClientProvider>
       </div>
 

@@ -24,7 +24,7 @@ const RadioGroup = ({ children, className, error = false, items, ...props }: Pro
         const { label, value, ...itemProps } = item;
 
         return (
-          <div className="mb-2 flex w-full gap-4" key={`${id}-${value}`}>
+          <div className="st_radio-buttons--wrapper mb-2 flex w-full gap-4" key={`${id}-${value}`}>
             <RadioGroupPrimitive.Item
               {...itemProps}
               className={cn(

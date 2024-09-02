@@ -29,7 +29,7 @@ export const ReviewSummary = async ({ data }: Props) => {
   const hasNoReviews = numberOfReviews === 0;
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 my-[10px]">
       <p
         aria-describedby={summaryId}
         className={cn('flex flex-nowrap text-primary', hasNoReviews && 'text-gray-400')}

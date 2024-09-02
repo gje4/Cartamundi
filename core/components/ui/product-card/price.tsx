@@ -21,7 +21,7 @@ export default function Price({
   if (typeof price === 'string') {
     return (
       <span className={clsx('text-sm font-semibold @4xl:text-xl @4xl:font-medium', className)}>
-        {price}
+        Price: {price}
       </span>
     );
   }
@@ -30,7 +30,7 @@ export default function Price({
     case 'range':
       return (
         <span className={clsx('text-sm font-semibold @4xl:text-xl @4xl:font-medium', className)}>
-          {price.minValue} - {price.maxValue}
+          Price: {price.minValue} - {price.maxValue}
         </span>
       );
 
@@ -38,7 +38,7 @@ export default function Price({
       return (
         <span className={clsx('text-sm font-semibold @4xl:text-xl @4xl:font-medium', className)}>
           <span className="text-contrast-400 font-normal line-through">{price.previousValue}</span>{' '}
-          {price.currentValue}
+          Price: {price.currentValue}
         </span>
       );
 

@@ -33,7 +33,8 @@ const Select = forwardRef<ElementRef<typeof SelectPrimitive.Trigger>, Props>(
           id={triggerId}
           ref={ref}
         >
-          <SelectPrimitive.Value placeholder={placeholder} />
+
+            <SelectPrimitive.Value placeholder={placeholder ? placeholder : "Select an option"} />
           <SelectPrimitive.Icon>
             <ChevronDown className="inline group-focus-visible:text-primary group-enabled:group-hover:text-primary" />
           </SelectPrimitive.Icon>
@@ -52,23 +53,23 @@ const Select = forwardRef<ElementRef<typeof SelectPrimitive.Trigger>, Props>(
                 const { value, label: optionLabel, ...optionProps } = option;
 
                 return (
-                  <SelectPrimitive.Item
-                    key={`${id}-${value}`}
-                    {...optionProps}
-                    className={
-                      'relative flex w-full cursor-pointer select-none items-center justify-between overflow-visible px-4 py-2 outline-none hover:bg-secondary/10 hover:text-primary focus-visible:bg-secondary/10 data-[disabled]:pointer-events-none data-[state="checked"]:bg-secondary/10 data-[state="checked"]:text-primary data-[disabled]:opacity-50'
-                    }
-                    value={value}
-                  >
-                    <SelectPrimitive.ItemText>{optionLabel}</SelectPrimitive.ItemText>
-                    <SelectPrimitive.ItemIndicator>
-                      <Check />
-                    </SelectPrimitive.ItemIndicator>
-                  </SelectPrimitive.Item>
+                    <SelectPrimitive.Item
+                        key={`${id}-${value}`}
+                        {...optionProps}
+                        className={
+                            'relative flex w-full cursor-pointer select-none items-center justify-between overflow-visible px-4 py-2 outline-none hover:bg-secondary/10 hover:text-primary focus-visible:bg-secondary/10 data-[disabled]:pointer-events-none data-[state="checked"]:bg-secondary/10 data-[state="checked"]:text-primary data-[disabled]:opacity-50'
+                        }
+                        value={value}
+                    >
+                        <SelectPrimitive.ItemText>{optionLabel}</SelectPrimitive.ItemText>
+                        <SelectPrimitive.ItemIndicator>
+                            <Check/>
+                        </SelectPrimitive.ItemIndicator>
+                    </SelectPrimitive.Item>
                 );
               })}
             </SelectPrimitive.Viewport>
-            <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
+              <SelectPrimitive.ScrollDownButton className="flex cursor-default items-center justify-center py-1">
               <ChevronDownIcon />
             </SelectPrimitive.ScrollDownButton>
           </SelectPrimitive.Content>

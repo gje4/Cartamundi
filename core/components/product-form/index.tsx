@@ -123,34 +123,46 @@ export const ProductForm = ({ data: product }: Props) => {
 
         {productOptions.map((option) => {
           if (option.__typename === 'MultipleChoiceOption') {
-            return <MultipleChoiceField key={option.entityId} option={option} />;
+            return <MultipleChoiceField key={option.entityId} option={option}/>;
           }
 
           if (option.__typename === 'CheckboxOption') {
-            return <CheckboxField key={option.entityId} option={option} />;
+            return <CheckboxField key={option.entityId} option={option}/>;
           }
 
           if (option.__typename === 'NumberFieldOption') {
-            return <NumberField key={option.entityId} option={option} />;
+            return <NumberField key={option.entityId} option={option}/>;
           }
 
           if (option.__typename === 'MultiLineTextFieldOption') {
-            return <MultiLineTextField key={option.entityId} option={option} />;
+            return <MultiLineTextField key={option.entityId} option={option}/>;
           }
 
           if (option.__typename === 'TextFieldOption') {
-            return <TextField key={option.entityId} option={option} />;
+            return <TextField key={option.entityId} option={option}/>;
           }
 
           if (option.__typename === 'DateFieldOption') {
-            return <DateField key={option.entityId} option={option} />;
+            return <DateField key={option.entityId} option={option}/>;
           }
 
           return null;
         })}
 
+        <div className="st_subscribe-and-save">
+          <label htmlFor={`subscribeCheckbox`}>
+            <input
+                type="checkbox"
+                id={`subscribeCheckbox`}
+                name="subscribeCheckbox"
+            />
+            <span className="st_check"></span>
+          </label>
+          <span className="text-[14px] text-[black]">Subscribe and save 10% something</span>
+        </div>
+
         <div className="flex gap-[24px]">
-          <QuantityField />
+          <QuantityField/>
           {product.prices && (
               <div className="grid">
                 <span className="mb-2 block font-semibold">Price</span>
@@ -219,12 +231,12 @@ export const ProductForm = ({ data: product }: Props) => {
         </div>
 
         <div className="st_equal-col mt-4 flex flex-col gap-4 @md:flex-row">
-          <Submit data={product} />
+          <Submit data={product}/>
 
           {/* NOT IMPLEMENTED YET */}
           <div className="w-full">
             <Button disabled type="submit" variant="secondary">
-              <Heart aria-hidden="true" className="mr-2" />
+              <Heart aria-hidden="true" className="mr-2"/>
               <span>{t('saveToWishlist')}</span>
             </Button>
           </div>

@@ -89,10 +89,10 @@ export default function RootLayout({ children, params: { locale } }: RootLayoutP
 
   return (
     <html className={`${heading.variable} ${body.variable} ${mono.variable}`} lang={locale}>
-      <head>
-        <DraftModeScript />
-      </head>
-      <body className="flex h-screen min-w-[375px] flex-col font-body">
+    <head>
+      <DraftModeScript/>
+    </head>
+    <body className="font-body">
         <Notifications />
         <NextIntlClientProvider locale={locale} messages={{ Providers: messages.Providers ?? {} }}>
           <Providers>{children}</Providers>

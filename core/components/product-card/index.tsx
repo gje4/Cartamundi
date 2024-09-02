@@ -6,6 +6,7 @@ import { pricesTransformer } from '~/data-transformers/prices-transformer';
 
 import { AddToCart } from './add-to-cart';
 import { AddToCartFragment } from './add-to-cart/fragment';
+import {removeEdgesAndNodes} from "@bigcommerce/catalyst-client";
 
 export const PricingFragment = graphql(`
   fragment PricingFragment on Product {
@@ -54,6 +55,14 @@ export const ProductCardFragment = graphql(
         name
         path
       }
+      customFields {
+          edges {
+              node {
+                  name
+                  value
+              }
+          }
+      }
       reviewSummary {
         numberOfReviews
         averageRating
@@ -82,22 +91,23 @@ export const ProductCard = async ({
 }: Props) => {
   const format = await getFormatter();
 
-  const { name, entityId, defaultImage, brand, path, prices } = product;
+  const { name, entityId, defaultImage, brand, path, prices, customFields } = product;
 
   const price = pricesTransformer(prices, format);
 
   return (
-    <ComponentProductCard
-      addToCart={showCart && <AddToCart data={product} />}
-      href={path}
-      id={entityId.toString()}
-      image={defaultImage ? { src: defaultImage.url, altText: defaultImage.altText } : undefined}
-      imagePriority={imagePriority}
-      imageSize={imageSize}
-      name={name}
-      price={price}
-      showCompare={showCompare}
-      subtitle={brand?.name}
-    />
+      <ComponentProductCard
+          addToCart={showCart && <AddToCart data={product} />}
+          href={path}
+          id={entityId.toString()}
+          image={defaultImage ? { src: defaultImage.url, altText: defaultImage.altText } : undefined}
+          imagePriority={imagePriority}
+          imageSize={imageSize}
+          name={name}
+          price={price}
+          showCompare={showCompare}
+          subtitle={brand?.name}
+          customFields={removeEdgesAndNodes(customFields)}
+      />
   );
 };

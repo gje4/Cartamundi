@@ -22,7 +22,7 @@ const Gallery = ({ className, images, defaultImageIndex = 0 }: Props) => {
 
   return (
     <div aria-live="polite" className={className}>
-      <figure className="relative aspect-square h-full max-h-[548px] w-full">
+      <figure className="st_image--wrapper relative aspect-square h-full max-h-[548px] w-full">
         {selectedImage ? (
           <BcImage
             alt={selectedImage.altText}

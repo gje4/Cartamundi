@@ -42,7 +42,7 @@ export const Button = function Button({
         'after:absolute after:inset-0 after:z-0 after:h-full after:w-full after:rounded-full',
         'after:transition-[opacity,transform] after:duration-300 after:ease-out',
         'after:-translate-x-[110%]',
-        !loading && 'hover:after:translate-x-0',
+        !loading && 'hover:bg-[#522D72]',
         {
           primary: 'after:bg-white/40',
           secondary: 'after:bg-background',
@@ -61,7 +61,7 @@ export const Button = function Button({
         {/* Children */}
         <div
           className={clsx(
-            'relative z-50 flex h-full items-center justify-center gap-2 transition-colors',
+            'relative z-50 flex h-full items-center justify-center gap-2 transition-colors text-[#fff]',
             loading && 'opacity-0',
             {
               'mix-blend-difference': variant === 'secondary' || variant === 'tertiary',

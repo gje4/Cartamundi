@@ -113,13 +113,13 @@ export default async function Category({ params: { locale, slug }, searchParams 
 
             <section
                 aria-labelledby="product-heading"
-                className="col-span-4 group-has-[[data-pending]]:animate-pulse lg:col-span-3"
+                className="st_product-collection-primary--wrapper col-span-4 group-has-[[data-pending]]:animate-pulse lg:col-span-3"
             >
               <h2 className="sr-only" id="product-heading">
                 {t('products')}
               </h2>
 
-              <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8">
+              <div className="st_product-collections-page--wrapper">
                 {products.map((product, index) => (
                     <ProductCard
                         imagePriority={index <= 3}

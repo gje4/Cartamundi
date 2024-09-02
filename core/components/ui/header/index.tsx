@@ -111,7 +111,7 @@ export const Header = forwardRef(function Header(
         transition: 'transform .5s ease-in-out',
       }}
     >
-      <div className="flex items-center gap-[24px] px-[20px] py-[6px] bg-[#000] text-[#fff]">
+      <div className="flex items-center gap-[24px] px-[32px] py-[6px] bg-[#000] text-[#fff]">
         <span>You are shopping with:</span>
         <span>Milan Stankovic</span>
       </div>
@@ -134,7 +134,7 @@ export const Header = forwardRef(function Header(
                   setNavOpen(true)
                   setSearchOpen(false)
                 }}
-                className="relative mx-0.5 py-2.5 hidden items-center rounded-xl px-[0px] text-sm font-medium ring-primary transition-colors duration-200
+                className="relative mx-0.5 py-2.5 hidden px-2.5 items-center rounded-xl text-sm font-medium ring-primary transition-colors duration-200
                   hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
               >
                 {item.label}
