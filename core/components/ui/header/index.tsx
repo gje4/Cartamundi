@@ -111,7 +111,7 @@ export const Header = forwardRef(function Header(
         transition: 'transform .5s ease-in-out',
       }}
     >
-      <div className="flex items-center gap-[24px] px-[32px] py-[6px] bg-[#000] text-[#fff]">
+      <div className="flex items-center flex-wrap gap-x-[24px] gap-y-[6px] px-[20px] lg:px-[32px] py-[6px] bg-[#000] text-[#fff]">
         <span>You are shopping with:</span>
         <span>Milan Stankovic</span>
       </div>

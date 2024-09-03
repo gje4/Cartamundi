@@ -30,6 +30,7 @@ interface Product {
   href: string;
   image?: Image;
   price?: Price;
+  basePrice?: any;
   subtitle?: string;
   badge?: string;
   customFields?: {[propName: string]: any}
@@ -51,6 +52,7 @@ const ProductCard = ({
   imageSize,
   href,
   price,
+  basePrice,
   id,
   showCompare = true,
   subtitle,

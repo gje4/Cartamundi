@@ -23,6 +23,7 @@ import { NumberField } from './fields/number-field';
 import { QuantityField } from './fields/quantity-field';
 import { TextField } from './fields/text-field';
 import { ProductFormData, useProductForm } from './use-product-form';
+import {useState} from "react";
 
 interface Props {
   data: FragmentOf<typeof ProductItemFragment>;
@@ -62,7 +63,6 @@ export const ProductForm = ({ data: product }: Props) => {
   const t = useTranslations('Product.Form');
   const m = useTranslations('AddToCart');
   const productOptions = removeEdgesAndNodes(product.productOptions);
-
   const { handleSubmit, register, ...methods } = useProductForm();
   const format = useFormatter();
   const showPriceRange =
@@ -115,6 +115,16 @@ export const ProductForm = ({ data: product }: Props) => {
       { icon: <Check className="text-success-secondary" /> },
     );
   };
+  const [checked, setChecked] = useState(false);
+
+  const toggleChecked = () => {
+    setChecked(!checked);
+  }
+
+  let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+  let parseBasePrice = parseFloat(basePrice);
+  let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
+
 
   return (
     <FormProvider handleSubmit={handleSubmit} register={register} {...methods}>
@@ -150,20 +160,29 @@ export const ProductForm = ({ data: product }: Props) => {
         })}
 
         <div className="st_subscribe-and-save">
-          <label htmlFor={`subscribeCheckbox`}>
+          <label htmlFor={`subscribe_and_save`}>
             <input
+                className="st_checkbox_JS"
                 type="checkbox"
-                id={`subscribeCheckbox`}
-                name="subscribeCheckbox"
+                id="subscribe_and_save"
+                name="subscribe_and_save"
+                checked={checked}
+                onChange={toggleChecked}
             />
             <span className="st_check"></span>
+            <span className="absolute block pl-[50px] w-max text-[12px] text-[black] lg:text-[14px]">Subscribe and save 10% (${discountedPrice})</span>
           </label>
-          <span className="text-[14px] text-[black]">Subscribe and save 10% something</span>
         </div>
 
         <div className="flex gap-[24px]">
           <QuantityField/>
-          {product.prices && (
+          <div className="flex items-end gap-[6px]">
+            {checked &&
+                <div className="text-[32px] text-[#3F2A56] leading-[1.3]">${discountedPrice}</div>
+            }
+            <div className={`${!checked ? 'text-[32px] text-[#3F2A56] leading-[1.3]' : 'text-[20px] line-through text-[#747474]'}`}>${basePrice}</div>
+          </div>
+          {/*{product.prices && (
               <div className="grid">
                 <span className="mb-2 block font-semibold">Price</span>
                 <div className="text-[24px] font-bold leading-[1.2] flex items-end">
@@ -227,7 +246,7 @@ export const ProductForm = ({ data: product }: Props) => {
                   )}
                 </div>
               </div>
-          )}
+          )}*/}
         </div>
 
         <div className="st_equal-col mt-4 flex flex-col gap-4 @md:flex-row">

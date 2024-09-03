@@ -105,6 +105,7 @@ export const ProductCard = async ({
           imageSize={imageSize}
           name={name}
           price={price}
+          basePrice={prices?.basePrice}
           showCompare={showCompare}
           subtitle={brand?.name}
           customFields={removeEdgesAndNodes(customFields)}

@@ -27,6 +27,7 @@ export interface Product {
   href: string;
   image?: Image;
   price?: ProductPrice;
+  basePrice?: any;
   subtitle?: string;
   badge?: string;
   className?: string;
@@ -40,19 +41,23 @@ export const ProductCard = function ProductCard({
   href,
   image,
   price,
+  basePrice,
   subtitle,
   badge,
   className,
   reviewSummary,
   customFields
 }: Product & ComponentPropsWithoutRef<'a'>) {
-    let newPrice = price;
 
-    if (typeof price === typeof Object) {
-        newPrice ={...(price as any), type: 'sale'};
-    }
+    let productSubtitle = [];
+    Object.values(customFields).map((item => {
+        if(item.name === "productSubtitle") {
+            productSubtitle.push(item.value);
+        }
+    }));
 
-    console.log("customFields", customFields);
+    let calculateDiscountPrice = (basePrice.value - (basePrice.value / 10)).toFixed(2);
+
   return (
       <div className="st_single-card--wrapper">
         <CustomLink
@@ -81,19 +86,27 @@ export const ProductCard = function ProductCard({
           <Compare label="Compare" checked={checked} setChecked={setChecked} />
         )} */}
           </div>
-          <h3 className="flex flex-col flex-wrap justify-between font-semibold text-[18px] mb-[6px]">
-            {name && <span className="st_title line-clamp-2">{name}</span>}
-            {subtitle &&
-                <span className="st_light-primary font-normal text-contrast-400 leading-[1.2]">{subtitle}</span>}
-          </h3>
-          <div className="st_light-primary text-[16px]">This is a subtitle. It goes here....</div>
+            <h3 className="flex flex-col flex-wrap justify-between font-semibold text-[18px] mb-[6px]">
+                {name && <span className="st_title line-clamp-2">{name}</span>}
+                {basePrice.value &&
+                    <span>${(basePrice.value).toFixed(2)}</span>
+                }
+                {/*{subtitle &&
+                    <span className="st_light-primary font-normal text-contrast-400 leading-[1.2]">{subtitle}</span>
+                }*/}
+            </h3>
+            <div className="st_light-primary text-[16px]">{productSubtitle}</div>
         </CustomLink>
-        {price && <Price price={price} />}
-        <div className="pt-[20px]">
-            <button className="st_add-to-cart-button" type="button">
-                <span>Add to cart</span>
-            </button>
-        </div>
+          <div>
+              {basePrice.value &&
+                  <div className="rounded-[10px] w-full px-[24px] py-[12px] bg-[#dddae8] mb-[20px]">
+                      <div className="text-[#522D72] text-[14px]">Price with Subscribe and Save: <span>${calculateDiscountPrice}</span></div>
+                  </div>
+              }
+              <a className="bg-[#522D72] text-[#fff] text-center w-full block px-[24px] py-[12px] cursor-pointer rounded-[50px]"
+                 href={href}>View Products</a>
+              {/*{price && <Price price={price}/>}*/}
+          </div>
       </div>
   );
 };

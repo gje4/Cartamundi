@@ -56,7 +56,7 @@ export const Footer = function Footer({
       )}
     >
       <div className="mx-auto max-w-screen-2xl">
-        <div className="mx-3 flex flex-col justify-between gap-10 border-t border-t-contrast-100 pt-16 @xl:mx-6 @xl:py-20 @2xl:flex-row @5xl:mx-20">
+        <div className="flex flex-col justify-between gap-10 border-t border-t-contrast-100 pt-16 @xl:py-20 @2xl:flex-row">
           <div className="flex flex-col @2xl:w-1/3">
             {/* Contact Information */}
             {contactInformation?.address || contactInformation?.phone ? (

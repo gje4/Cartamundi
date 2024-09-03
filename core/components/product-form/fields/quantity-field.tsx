@@ -13,8 +13,8 @@ export const QuantityField = () => {
   const t = useTranslations('Product.Form');
 
   return (
-    <div>
-      <Label className="mb-2 inline-block font-semibold" htmlFor="quantity">
+    <div className="flex items-center gap-[10px]">
+      <Label className="inline-block font-semibold" htmlFor="quantity">
         {t('quantityLabel')}
       </Label>
       <Counter
