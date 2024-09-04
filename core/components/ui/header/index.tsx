@@ -121,8 +121,8 @@ export const Header = forwardRef(function Header(
         className="relative mx-auto w-full text-foreground @4xl:mx-[max(20px,auto)] max-w-[100%]"
       >
         <nav
-          className="grid h-[60px] grid-cols-[1fr,auto,1fr] items-center  justify-between text-white bg-[#522d72] p-10
-          @4xl:mx-5 @4xl:rounded-[24px] !rounded-[0px] !mx-[0px] px-[20px]"
+          className="grid grid-cols-[1fr,auto,1fr] items-center  justify-between text-white bg-[#522d72]
+          @4xl:mx-5 @4xl:rounded-[24px] !rounded-[0px] !mx-[0px] px-[10px] py-[10px]"
         >
           <div className="relative flex items-stretch gap-5" ref={container}>
             {links?.map((item, i) => (
@@ -135,7 +135,7 @@ export const Header = forwardRef(function Header(
                   setSearchOpen(false)
                 }}
                 className="relative mx-0.5 py-2.5 hidden px-2.5 items-center rounded-xl text-sm font-medium ring-primary transition-colors duration-200
-                  hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
+                  hover:bg-opacity-20 hover:bg-white focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
               >
                 {item.label}
               </CustomLink>
@@ -157,7 +157,7 @@ export const Header = forwardRef(function Header(
             )}
           </CustomLink>
 
-          <div className="ml-auto flex items-center gap-2  transition-colors duration-300">
+          <div className="ml-auto flex items-center gap-2 transition-colors duration-300">
             <div className="absolute left-3 flex items-center @4xl:relative @4xl:left-0">
               {/* Hamburger Menu Button */}
               <button
@@ -212,7 +212,7 @@ export const Header = forwardRef(function Header(
               <button
                 role="button"
                 aria-label="Search"
-                className="rounded-lg p-1.5 ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+                className="rounded-lg p-1.5 ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-opacity-20 @4xl:hover:bg-white"
                 onClick={() => setSearchOpen(!searchOpen)}
               >
                 <Search className="w-5" strokeWidth={1} />
@@ -221,14 +221,14 @@ export const Header = forwardRef(function Header(
             <CustomLink
               href={accountHref}
               aria-label="Profile"
-              className="rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+              className="rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-opacity-20 @4xl:hover:bg-white"
             >
               <User className={clsx('w-5', searchOpen && 'stroke-contrast-300')} strokeWidth={1} />
             </CustomLink>
             <CustomLink
               href={cartHref}
               aria-label="Cart"
-              className="relative rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+              className="relative rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-opacity-20 @4xl:hover:bg-white"
             >
               <ShoppingBag
                 className={clsx('w-5', searchOpen && 'stroke-contrast-300')}
@@ -245,32 +245,33 @@ export const Header = forwardRef(function Header(
             <DropdownMenu>
               <DropdownMenuTrigger
                 className={clsx(
-                  'hidden items-center gap-1 rounded-lg bg-white p-2 text-xs uppercase hover:bg-contrast-100',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary @sm:flex',
+                  'hidden items-center gap-1 rounded-lg bg-white p-[5px] text-xs uppercase hover:bg-opacity-20 bg-opacity-10',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary @sm:flex text-white',
                   searchOpen ? 'text-contrast-300' : 'text-foreground'
                 )}
               >
                 {selectedLanguage}
                 <ChevronDown
                   strokeWidth={1.5}
+                  height={12}
                   className={clsx('w-4', searchOpen && 'stroke-contrast-300')}
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="z-50 mt-4 max-h-[20rem] w-20 overflow-y-scroll rounded-xl bg-background
-                p-2 shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+                className="z-50 mt-[5px] max-h-[20rem] overflow-y-scroll bg-background
+                p-[5px] shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
                 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95
                 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2
                 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
-                data-[side=top]:slide-in-from-bottom-2 @4xl:-ml-14
-                @4xl:w-32 @4xl:rounded-3xl @4xl:p-4"
+                data-[side=top]:slide-in-from-bottom-2
+                @4xl:rounded-[5px] border border-gray-500 outline-none"
               >
                 {locales?.map(({ id, language }) => (
                   <DropdownMenuItem
                     key={id}
                     className={clsx(
-                      'cursor-default rounded-xl px-3 py-2 text-sm font-medium uppercase text-contrast-400 outline-none transition-colors',
-                      'hover:text-foreground focus:bg-contrast-100 @4xl:text-[15px]',
+                      'text-sm font-medium capitalize text-gray-900 outline-none cursor-pointer',
+                      'hover:text-foreground focus:bg-contrast-100 @4xl:text-[12px]',
                       {
                         'text-foreground': selectedLanguage === language,
                       }
