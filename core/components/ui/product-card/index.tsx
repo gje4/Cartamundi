@@ -50,13 +50,15 @@ export const ProductCard = function ProductCard({
 }: Product & ComponentPropsWithoutRef<'a'>) {
 
     let productSubtitle = [];
-    Object.values(customFields).map((item => {
-        if(item.name === "productSubtitle") {
-            productSubtitle.push(item.value);
-        }
-    }));
+    if(customFields) {
+        customFields.forEach((item => {
+            if(item.name === "productSubtitle") {
+                productSubtitle.push(item.value);
+            }
+        }));
+    }
 
-    let calculateDiscountPrice = (basePrice.value - (basePrice.value / 10)).toFixed(2);
+    let calculateDiscountPrice = typeof  basePrice != "undefined" ? (basePrice.value - (basePrice.value / 10)).toFixed(2) : "";
 
   return (
       <div className="st_single-card--wrapper">
@@ -88,7 +90,7 @@ export const ProductCard = function ProductCard({
           </div>
             <h3 className="flex flex-col flex-wrap justify-between font-semibold text-[18px] mb-[6px]">
                 {name && <span className="st_title line-clamp-2">{name}</span>}
-                {basePrice.value &&
+                {basePrice && basePrice.value &&
                     <span>${(basePrice.value).toFixed(2)}</span>
                 }
                 {/*{subtitle &&
@@ -98,7 +100,7 @@ export const ProductCard = function ProductCard({
             <div className="st_light-primary text-[16px]">{productSubtitle}</div>
         </CustomLink>
           <div>
-              {basePrice.value &&
+              {basePrice && basePrice.value &&
                   <div className="rounded-[10px] w-full px-[24px] py-[12px] bg-[#dddae8] mb-[20px]">
                       <div className="text-[#522D72] text-[14px]">Price with Subscribe and Save: <span>${calculateDiscountPrice}</span></div>
                   </div>
