@@ -41,7 +41,6 @@ export const GET = async (
     document: GetProductCardCarousel,
     customerId,
   });
-
   if (type === 'newest') {
     return NextResponse.json(removeEdgesAndNodes(data.site.newestProducts));
   }

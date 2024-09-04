@@ -24,20 +24,20 @@ const Breadcrumbs = ({ breadcrumbs, className }: Props) => {
           return (
             <Fragment key={label}>
               <li className="flex items-center text-sm font-semibold text-black">
-                <CustomLink
-                  aria-current={isLast ? `page` : undefined}
-                  className={cn(
-                    'font-semibold hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20',
-                    isLast && 'font-extrabold',
-                  )}
-                  href={href}
-                >
-                  {label}
-                </CustomLink>
+                {/*<CustomLink*/}
+                {/*  aria-current={isLast ? `page` : undefined}*/}
+                {/*  className={cn(*/}
+                {/*    'font-semibold hover:text-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20',*/}
+                {/*    isLast && 'font-extrabold',*/}
+                {/*  )}*/}
+                {/*  href={href}*/}
+                {/*>*/}
+                {/*  {label}*/}
+                {/*</CustomLink>*/}
               </li>
               {!isLast ? (
                 <span className="mx-1">
-                  <ChevronRight aria-hidden="true" size={20} />
+                  {/*<ChevronRight aria-hidden="true" size={20} />*/}
                 </span>
               ) : null}
             </Fragment>

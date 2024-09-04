@@ -28,6 +28,7 @@ const SubmitButton = () => {
     <Button
       className="md:w-auto"
       loading={pending}
+        // @ts-ignore
       loadingText={t('Form.submitting')}
       variant="primary"
     >

@@ -70,7 +70,7 @@ type LocalePrefixesType = `${LocalePrefixes}`;
 
 // Temporary we use NEVER prefix to prioritize accept-language header
 // & disable internationalized routes due to incomplete multilingual implementation
-const localePrefix: LocalePrefixesType = LocalePrefixes.NEVER;
+const localePrefix: LocalePrefixesType = LocalePrefixes.ASNEEDED;
 const defaultLocale = 'en';
 
 type LocaleType = (typeof locales)[number];

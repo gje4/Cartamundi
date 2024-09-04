@@ -17,11 +17,11 @@ export const SearchForm = ({ initialTerm = '' }: Props) => {
   return (
     <div className="flex flex-col gap-8 py-16">
       {initialTerm ? (
-        <h3 className="text-3xl font-black lg:text-4xl">
+        <h3 className="text-3xl text-[#522d72] lg:text-4xl">
           {t('noSearchResults', { term: `"${initialTerm}"` })}
         </h3>
       ) : (
-        <h3 className="text-3xl font-black lg:text-4xl">{t('searchProducts')}</h3>
+        <h3 className="text-3xl text-[#522d72] lg:text-4xl">{t('searchProducts')}</h3>
       )}
       <p>{t('checkSpelling')}</p>
       <Form action="/search" className="flex" method="get">
@@ -31,6 +31,7 @@ export const SearchForm = ({ initialTerm = '' }: Props) => {
           </FieldControl>
         </Field>
         <FormSubmit asChild>
+          {/*// @ts-ignore*/}
           <Button className="w-auto" loading={pending} loadingText={t('searching')} type="submit">
             {t('search')}
           </Button>

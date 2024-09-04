@@ -50,6 +50,7 @@ const AddressChangeButtons = ({ addressId, isAddressRemovable, onDelete }: Addre
         confirmationText={t('confirmDeleteAddress')}
         title={t('deleteModalTitle')}
       >
+        {/*// @ts-ignore*/}
         <Button aria-label={t('deleteButton')} disabled={!isAddressRemovable} variant="subtle">
           {t('deleteButton')}
         </Button>

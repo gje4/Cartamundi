@@ -131,7 +131,7 @@ const Search = ({ initialTerm = '', logo, onSearch }: Props) => {
                       width={155}
                     />
                   ) : (
-                    <span className="truncate text-2xl font-black">{logo}</span>
+                    <span className="truncate text-2xl text-[#522d72]">{logo}</span>
                   )}
                 </CustomLink>
               </div>

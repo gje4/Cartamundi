@@ -29,7 +29,7 @@ export default async function Search({ params: { locale }, searchParams }: Props
   if (!searchTerm) {
     return (
       <>
-        <h1 className="mb-3 text-4xl font-black lg:text-5xl">{t('heading')}</h1>
+        <h1 className="mb-3 text-4xl text-[#522d72] lg:text-5xl">{t('heading')}</h1>
         <NextIntlClientProvider locale={locale} messages={{ NotFound: messages.NotFound ?? {} }}>
           <SearchForm />
         </NextIntlClientProvider>

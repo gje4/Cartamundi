@@ -122,7 +122,7 @@ export default async function Compare({
     return (
       <div className="flex w-full justify-center py-16 align-middle">
         <div className="flex max-w-2xl flex-col gap-8 pb-8">
-          <h1 className="text-4xl font-black lg:text-5xl">{t('nothingCompare')}</h1>
+          <h1 className="text-4xl text-[#522d72] lg:text-5xl">{t('nothingCompare')}</h1>
           <p className="text-lg">{t('helpingText')}</p>
           <NextIntlClientProvider locale={locale} messages={{ NotFound: messages.NotFound ?? {} }}>
             <SearchForm />
@@ -134,7 +134,7 @@ export default async function Compare({
 
   return (
     <>
-      <h1 className="pb-8 text-4xl font-black lg:text-5xl">
+      <h1 className="pb-8 text-4xl text-[#522d72] lg:text-5xl">
         {t('comparingQuantity', { quantity: products.length })}
       </h1>
 

@@ -22,6 +22,7 @@ const SubmitButton = () => {
     <Button
       className="items-center px-8 py-2"
       loading={pending}
+        // @ts-ignore
       loadingText={t('spinnerText')}
       variant="secondary"
     >
@@ -40,6 +41,7 @@ export const RemoveButton = () => {
       loading={pending}
       loadingText={t('spinnerText')}
       type="submit"
+        // @ts-ignore
       variant="subtle"
     >
       {t('remove')}
@@ -116,6 +118,7 @@ export const CouponCode = ({ checkout }: Props) => {
           aria-controls="coupon-code-form"
           className="w-fit p-0 text-primary hover:bg-transparent"
           onClick={() => setShowAddCoupon((open) => !open)}
+            // @ts-ignore
           variant="subtle"
         >
           {showAddCoupon ? t('cancel') : t('add')}

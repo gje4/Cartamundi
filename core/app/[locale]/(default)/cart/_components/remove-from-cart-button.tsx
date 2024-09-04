@@ -15,6 +15,7 @@ export const RemoveFromCartButton = () => {
       loading={pending}
       loadingText={t('spinnerText')}
       type="submit"
+        // @ts-ignore
       variant="subtle"
     >
       {t('remove')}

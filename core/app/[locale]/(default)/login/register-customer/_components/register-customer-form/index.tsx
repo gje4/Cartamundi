@@ -67,6 +67,7 @@ const SubmitButton = ({ messages }: SumbitMessages) => {
     <Button
       className="relative mt-8 w-fit items-center px-8 py-2"
       loading={pending}
+        // @ts-ignore
       loadingText={messages.submitting}
       variant="primary"
     >

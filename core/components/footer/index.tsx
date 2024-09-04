@@ -123,31 +123,30 @@ export const Footer = ({ data }: Props) => {
       })),
     },
   ];
-
   return (
-    <ComponentsFooter
-      contactInformation={data.settings?.contact ?? undefined}
-      copyright={
-        data.settings
-          ? `© ${new Date().getFullYear()} ${data.settings.storeName} – Powered by BigCommerce`
-          : undefined
-      }
-      logo={data.settings ? logoTransformer(data.settings) : undefined}
-      paymentIcons={[
-        <AmazonIcon key="amazon" />,
-        <AmericanExpressIcon key="americanExpress" />,
-        <ApplePayIcon key="apple" />,
-        <MastercardIcon key="mastercard" />,
-        <PayPalIcon key="paypal" />,
-        <VisaIcon key="visa" />,
-      ]}
-      sections={sections}
-      socialMediaLinks={data.settings?.socialMediaLinks
-        .filter((socialMediaLink) => Boolean(socialIcons[socialMediaLink.name]))
-        .map((socialMediaLink) => ({
-          href: socialMediaLink.url,
-          icon: socialIcons[socialMediaLink.name]?.icon,
-        }))}
-    />
+      <ComponentsFooter
+          contactInformation={data.settings?.contact ?? undefined}
+          copyright={
+            data.settings
+                ? `© ${new Date().getFullYear()} ${data.settings.storeName} – Powered by BigCommerce`
+                : undefined
+          }
+          logo={data.settings ? logoTransformer(data.settings) : undefined}
+          paymentIcons={[
+            <AmazonIcon key="amazon" />,
+            <AmericanExpressIcon key="americanExpress" />,
+            <ApplePayIcon key="apple" />,
+            <MastercardIcon key="mastercard" />,
+            <PayPalIcon key="paypal" />,
+            <VisaIcon key="visa" />,
+          ]}
+          sections={sections}
+          socialMediaLinks={data.settings?.socialMediaLinks
+              .filter((socialMediaLink) => Boolean(socialIcons[socialMediaLink.name]))
+              .map((socialMediaLink) => ({
+                href: socialMediaLink.url,
+                icon: socialIcons[socialMediaLink.name]?.icon,
+              }))}
+      />
   );
 };
