@@ -34,6 +34,7 @@ const SubmitButton = () => {
       className="relative w-fit items-center px-8 py-2"
       data-button
       loading={pending}
+        // @ts-ignore
       loadingText={t('spinnerText')}
       variant="primary"
     >

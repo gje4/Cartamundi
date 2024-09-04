@@ -60,7 +60,7 @@ export default async function Login({ params: { locale }, searchParams }: Props)
   if (action === 'change_password' && customerId && customerToken) {
     return (
       <div className="mx-auto my-6 max-w-4xl">
-        <h2 className="mb-8 text-4xl font-black lg:text-5xl">{t('changePasswordHeading')}</h2>
+        <h2 className="mb-8 text-4xl text-[#522d72] lg:text-5xl">{t('changePasswordHeading')}</h2>
         <NextIntlClientProvider locale={locale} messages={{ Account }}>
           <ChangePasswordForm customerId={customerId} customerToken={customerToken} />
         </NextIntlClientProvider>
@@ -71,7 +71,7 @@ export default async function Login({ params: { locale }, searchParams }: Props)
   if (action === 'reset_password') {
     return (
       <div className="mx-auto my-6 max-w-4xl">
-        <h2 className="mb-8 text-4xl font-black lg:text-5xl">{t('resetPasswordHeading')}</h2>
+        <h2 className="mb-8 text-4xl text-[#522d72] lg:text-5xl">{t('resetPasswordHeading')}</h2>
         <NextIntlClientProvider locale={locale} messages={{ Account }}>
           <ResetPasswordForm reCaptchaSettings={data.site.settings?.reCaptcha} />
         </NextIntlClientProvider>
@@ -81,7 +81,7 @@ export default async function Login({ params: { locale }, searchParams }: Props)
 
   return (
     <div className="mx-auto my-6 max-w-4xl">
-      <h2 className="text-h2 mb-8 text-4xl font-black lg:text-5xl">{t('heading')}</h2>
+      <h2 className="text-h2 mb-8 text-4xl text-[#522d72] lg:text-5xl">{t('heading')}</h2>
       <div className="mb-12 grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
         <NextIntlClientProvider locale={locale} messages={{ Account }}>
           <LoginForm />

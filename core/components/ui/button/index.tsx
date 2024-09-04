@@ -26,7 +26,7 @@ export const Button = function Button({
     <Comp
       aria-busy={loading}
       className={clsx(
-        'relative flex w-fit shrink-0 justify-center overflow-hidden rounded-full',
+        'relative flex w-fit shrink-0 justify-center  text-white overflow-hidden rounded-full',
         'select-none text-center font-medium leading-normal',
         'border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2',
         {

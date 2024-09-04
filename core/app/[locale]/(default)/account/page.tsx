@@ -38,7 +38,7 @@ export default async function AccountPage({ params: { locale } }: Props) {
 
   return (
     <div className="mx-auto">
-      <h1 className="my-8 text-4xl font-black lg:my-8 lg:text-5xl">{t('heading')}</h1>
+      <h1 className="my-8 text-4xl text-[#522d72] lg:my-8 lg:text-5xl">{t('heading')}</h1>
 
       <div className="mb-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <AccountItem href="/account/orders" title={t('orders')}>

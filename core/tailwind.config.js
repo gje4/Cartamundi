@@ -19,7 +19,7 @@ const config = {
       },
       colors: {
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
+          DEFAULT: '#522d72',
           highlight: 'color-mix(in oklab, hsl(var(--primary)), white 75%)',
           shadow: 'color-mix(in oklab, hsl(var(--primary)), black 75%)',
         },

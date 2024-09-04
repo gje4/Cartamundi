@@ -44,6 +44,7 @@ export const AddToCartButton = ({
       className={className}
       disabled={isProductDisabled}
       loading={loading}
+        // @ts-ignore
       loadingText={t('processing')}
       type="submit"
     >

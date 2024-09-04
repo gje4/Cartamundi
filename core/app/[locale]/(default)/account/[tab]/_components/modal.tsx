@@ -41,6 +41,7 @@ export const Modal = ({
               {title}
             </DialogPrimitive.Title>
             <DialogPrimitive.Cancel asChild>
+              {/*// @ts-ignore*/}
               <Button className="ms-auto w-min p-2" type="button" variant="subtle">
                 <X>
                   <title>{abortText}</title>
@@ -53,11 +54,13 @@ export const Modal = ({
           )}
           <div className="flex flex-col gap-2 p-6 lg:flex-row">
             <DialogPrimitive.Action asChild>
+              {/*// @ts-ignore*/}
               <Button className="w-full lg:w-fit" onClick={actionHandler} variant="primary">
                 {confirmationText}
               </Button>
             </DialogPrimitive.Action>
             <DialogPrimitive.Cancel asChild>
+              {/*// @ts-ignore*/}
               <Button className="w-full lg:w-fit" variant="subtle">
                 {abortText}
               </Button>

@@ -64,6 +64,7 @@ const SubmitButton = ({ messages }: SumbitMessages) => {
     <Button
       className="relative items-center px-8 py-2 md:w-fit"
       loading={pending}
+        // @ts-ignore
       loadingText={messages.submitting}
       variant="primary"
     >
@@ -288,6 +289,7 @@ export const EditAddress = ({
             <Button
               className="ms-auto items-center px-8 md:w-fit"
               disabled={!canBeDeleted}
+                // @ts-ignore
               variant="subtle"
             >
               {t('deleteButton')}

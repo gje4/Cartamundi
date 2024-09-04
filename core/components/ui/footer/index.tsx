@@ -48,6 +48,8 @@ export const Footer = function Footer({
   copyright,
   className = '',
 }: Props) {
+
+  console.log("logo", logo)
   return (
     <footer
       className={clsx(
@@ -60,42 +62,46 @@ export const Footer = function Footer({
           <div className="flex flex-col @2xl:w-1/3">
             {/* Contact Information */}
             {contactInformation?.address || contactInformation?.phone ? (
-              <div className="text-[20px] font-medium @lg:text-2xl">
-                <h3 className="text-contrast-300">Contact Us</h3>
-                <div>
-                  {contactInformation.address && <p>{contactInformation.address}</p>}
-                  {contactInformation.phone && <p>{contactInformation.phone}</p>}
-                </div>
-              </div>
+                    <CustomLink
+                        className="relative inline-block h-5 w-32 rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
+                        href="#"
+                    >
+                      {typeof logo === 'string' ? (
+                          <span className="font-heading text-2xl font-semibold">{logo}</span>
+                      ) : (
+                          logo?.src && (
+                              <Image
+                                  alt={logo.altText ?? 'Logo'}
+                                  className="object-contain"
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
+                                  src={logo.src}
+                              />
+                          )
+                      )}
+                    </CustomLink>
+
+
             ) : (
-              // Logo
-              <CustomLink
-                className="relative inline-block h-5 w-32 rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
-                href="#"
-              >
-                {typeof logo === 'string' ? (
-                  <span className="font-heading text-2xl font-semibold">{logo}</span>
-                ) : (
-                  logo?.src && (
-                    <Image
-                      alt={logo.altText ?? 'Logo'}
-                      className="object-contain"
-                      fill
-                      sizes="400px"
-                      src={logo.src}
-                    />
-                  )
-                )}
-              </CustomLink>
+                // Logo
+
+                <div className="text-[20px] font-medium @lg:text-2xl">
+                  <h3 className="text-contrast-300">Contact Us</h3>
+                  <div>
+                    {contactInformation.address && <p>{contactInformation.address}</p>}
+                    {contactInformation.phone && <p>{contactInformation.phone}</p>}
+                  </div>
+                </div>
+
             )}
 
             {/* Social Media Links */}
             {socialMediaLinks && (
-              <div className="mt-auto flex items-center gap-4 pt-8">
-                {socialMediaLinks.map(({ href, icon }, i) => {
-                  return (
-                    <CustomLink
-                      className="flex items-center justify-center rounded-lg fill-contrast-400 p-1 ring-primary transition-colors duration-300 ease-out hover:fill-foreground focus-visible:outline-0 focus-visible:ring-2"
+                <div className="mt-auto flex items-center gap-4 pt-8">
+                  {socialMediaLinks.map(({href, icon}, i) => {
+                    return (
+                        <CustomLink
+                            className="flex items-center justify-center rounded-lg fill-contrast-400 p-1 ring-primary transition-colors duration-300 ease-out hover:fill-foreground focus-visible:outline-0 focus-visible:ring-2"
                       href={href}
                       key={i}
                     >

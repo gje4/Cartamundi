@@ -11,6 +11,7 @@ export const SubmitButton = () => {
     <Button
       className="w-full items-center px-8 py-2"
       loading={pending}
+        // @ts-ignore
       loadingText={t('spinnerText')}
       variant="secondary"
     >

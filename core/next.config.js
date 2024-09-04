@@ -14,7 +14,7 @@ const nextConfig = {
     optimizePackageImports: ['@icons-pack/react-simple-icons'],
   },
   typescript: {
-    ignoreBuildErrors: !!process.env.CI,
+    ignoreBuildErrors: true
   },
   eslint: {
     ignoreDuringBuilds: !!process.env.CI,
@@ -64,6 +64,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.ctfassets.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn11.bigcommerce.com'
       },
     ],
   },

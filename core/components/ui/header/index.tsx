@@ -121,10 +121,10 @@ export const Header = forwardRef(function Header(
         className="relative mx-auto w-full text-foreground @4xl:mx-[max(20px,auto)] max-w-[100%]"
       >
         <nav
-          className="grid h-[60px] grid-cols-[1fr,auto,1fr] items-center justify-between bg-background shadow-[2px_4px_24px_#00000010] 
+          className="grid h-[60px] grid-cols-[1fr,auto,1fr] items-center  justify-between text-white bg-[#522d72] p-10
           @4xl:mx-5 @4xl:rounded-[24px] !rounded-[0px] !mx-[0px] px-[20px]"
         >
-          <div className="relative flex items-stretch" ref={container}>
+          <div className="relative flex items-stretch gap-5" ref={container}>
             {links?.map((item, i) => (
               <CustomLink
                 key={i}
@@ -135,7 +135,7 @@ export const Header = forwardRef(function Header(
                   setSearchOpen(false)
                 }}
                 className="relative mx-0.5 py-2.5 hidden items-center rounded-xl px-[0px] text-sm font-medium ring-primary transition-colors duration-200
-                  hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
+                  focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
               >
                 {item.label}
               </CustomLink>
@@ -157,7 +157,7 @@ export const Header = forwardRef(function Header(
             )}
           </CustomLink>
 
-          <div className="ml-auto flex items-center gap-2 transition-colors duration-300">
+          <div className="ml-auto flex items-center gap-2  transition-colors duration-300">
             <div className="absolute left-3 flex items-center @4xl:relative @4xl:left-0">
               {/* Hamburger Menu Button */}
               <button
@@ -257,11 +257,11 @@ export const Header = forwardRef(function Header(
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="z-50 mt-4 max-h-[20rem] w-20 overflow-y-scroll rounded-xl bg-background 
-                p-2 shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 
-                data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 
-                data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 
-                data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 
+                className="z-50 mt-4 max-h-[20rem] w-20 overflow-y-scroll rounded-xl bg-background
+                p-2 shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+                data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95
+                data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2
+                data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
                 data-[side=top]:slide-in-from-bottom-2 @4xl:-ml-14
                 @4xl:w-32 @4xl:rounded-3xl @4xl:p-4"
               >

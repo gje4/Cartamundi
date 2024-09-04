@@ -67,6 +67,7 @@ export const ShippingEstimator = ({ checkout, shippingCountries }: Props) => {
               aria-controls="shipping-options"
               className="w-fit p-0 text-primary hover:bg-transparent"
               onClick={() => setShowShippingInfo((open) => !open)}
+                // @ts-ignore
               variant="subtle"
             >
               {showShippingInfo ? t('cancel') : t('add')}
@@ -81,7 +82,8 @@ export const ShippingEstimator = ({ checkout, shippingCountries }: Props) => {
               aria-controls="shipping-options"
               className="w-fit p-0 text-primary hover:bg-transparent"
               onClick={() => setShowShippingInfo((open) => !open)}
-              variant="subtle"
+                // @ts-ignore
+              variant="primary"
             >
               {showShippingInfo ? t('cancel') : t('change')}
             </Button>

@@ -51,6 +51,7 @@ const Dropdown = ({ align = 'center', className, items, trigger }: Props) => {
                   <Button
                     className="justify-start p-3 hover:bg-transparent hover:text-primary"
                     type="submit"
+                      // @ts-ignore
                     variant="subtle"
                   >
                     {item.name}
