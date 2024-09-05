@@ -2,6 +2,7 @@ import { graphql, ResultOf } from '~/client/graphql';
 import { Carousel } from '~/components/ui/carousel';
 
 import { ProductCard, ProductCardFragment } from '../product-card';
+import {CarouselRelated} from "~/components/ui/carousel-related";
 
 export const ProductCardCarouselFragment = graphql(
   `
@@ -28,16 +29,17 @@ export const ProductCardCarousel = ({
   if (products.length === 0) {
     return null;
   }
-
+console.log("products card", products)
   const items = products.map((product) => (
     <ProductCard
       imageSize="tall"
       key={product.entityId}
       product={product}
-      showCart={showCart}
-      showCompare={showCompare}
+      showCart={false}
+      showCompare={false}
     />
   ));
+  console.log("items card", items)
 
-  return <Carousel className="mb-14" products={items} title={title} />;
+  return <CarouselRelated className="mb-14" products={items} title={title} />;
 };

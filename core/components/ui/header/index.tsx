@@ -45,6 +45,8 @@ interface Props {
   locales?: { id: string; region: string; language: string }[]
 }
 
+import logoHC from '../../../app/[locale]/(default)/_images/logo_white.png';
+
 export const Header = forwardRef(function Header(
   { cartHref, cartCount, accountHref, links, logo, activeLocale, locales, ...rest }: Props,
   ref: Ref<HTMLDivElement>
@@ -118,7 +120,6 @@ export const Header = forwardRef(function Header(
     let activeSlide = slidesWrapper!.querySelector('.active');
     activeSlide?.classList.remove('active');
     let nextElementSibling = activeSlide!.nextElementSibling;
-    console.log("wwwwwwwwwwwwwwwwwww", activeSlide);
     if(nextElementSibling !== null) {
       nextElementSibling.classList.add('active');
       return;
