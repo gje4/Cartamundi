@@ -94,6 +94,7 @@ export const ProductCard = async ({
   const { name, entityId, defaultImage, brand, path, prices, customFields } = product;
 
   const price = pricesTransformer(prices, format);
+  const custFields = customFields ? removeEdgesAndNodes(customFields) : [];
 
   return (
       <ComponentProductCard
@@ -108,7 +109,7 @@ export const ProductCard = async ({
           basePrice={prices?.basePrice}
           showCompare={showCompare}
           subtitle={brand?.name}
-          customFields={removeEdgesAndNodes(customFields)}
+          customFields={custFields}
       />
   );
 };

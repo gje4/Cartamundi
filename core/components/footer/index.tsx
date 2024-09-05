@@ -108,13 +108,13 @@ export const Footer = ({ data }: Props) => {
         href: category.path,
       })),
     },
-    {
-      title: 'Brands',
-      links: removeEdgesAndNodes(data.brands).map((brand) => ({
-        label: brand.name,
-        href: brand.path,
-      })),
-    },
+    // {
+    //   title: 'Brands',
+    //   links: removeEdgesAndNodes(data.brands).map((brand) => ({
+    //     label: brand.name,
+    //     href: brand.path,
+    //   })),
+    // },
     {
       title: 'Navigate',
       links: removeEdgesAndNodes(data.content.pages).map((page) => ({

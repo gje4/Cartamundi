@@ -14,6 +14,9 @@ import { CheckoutButton } from './_components/checkout-button';
 import { CheckoutSummary, CheckoutSummaryFragment } from './_components/checkout-summary';
 import { EmptyCart } from './_components/empty-cart';
 import { GeographyFragment } from './_components/shipping-estimator/fragment';
+import {ProductCardCarousel} from "~/components/product-card-carousel";
+import {RelatedProducts} from "~/app/[locale]/(default)/product/[slug]/_components/related-products";
+import {Suspense} from "react";
 
 export const metadata = {
   title: 'Cart',
@@ -102,7 +105,15 @@ export default async function CartPage({ params: { locale } }: Props) {
         </div>
       </div>
       <CartViewed checkout={checkout} currencyCode={cart.currencyCode} lineItems={lineItems} />
+
+
+          <Suspense fallback={t('loading')}>
+        <RelatedProducts productId={117} />
+      </Suspense>
+
+
     </div>
+
   );
 }
 

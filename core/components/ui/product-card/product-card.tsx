@@ -57,7 +57,7 @@ const ProductCard = ({
   showCompare = true,
   subtitle,
   name,
-  customFields,
+    customFields,
   ...props
 }: Props) => (
     <div className={cn('group relative flex flex-col overflow-visible', className)} {...props}>

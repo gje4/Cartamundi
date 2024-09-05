@@ -39,6 +39,10 @@ interface Props {
   className?: string;
 }
 
+// @ts-ignore
+import footerLogo from '../../../app/[locale]/(default)/_images/amare_footer_logo.png';
+
+
 export const Footer = function Footer({
   logo,
   sections,
@@ -50,6 +54,14 @@ export const Footer = function Footer({
 }: Props) {
 
   console.log("logo", logo)
+
+  let imageLogo:any = (typeof logo == 'object' && typeof logo.src != "undefined") ? logo: false;
+  let logoRatio = 2.5;
+  let logoW = 200;
+  let logoH = logoW/logoRatio;
+  imageLogo.src = imageLogo.src.replace("{:size}", logoW+"x"+logoH);
+  let logoType = imageLogo ? "image" : "text";
+
   return (
     <footer
       className={clsx(
@@ -63,19 +75,19 @@ export const Footer = function Footer({
             {/* Contact Information */}
             {contactInformation?.address || contactInformation?.phone ? (
                     <CustomLink
-                        className="relative inline-block h-5 w-32 rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
+                        className="relative inline-block h-5 w-64  rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
                         href="#"
                     >
                       {typeof logo === 'string' ? (
                           <span className="font-heading text-2xl font-semibold">{logo}</span>
                       ) : (
-                          logo?.src && (
+                          imageLogo?.src && (
                               <Image
-                                  alt={logo.altText ?? 'Logo'}
+                                  alt={imageLogo.altText ?? 'Logo'}
                                   className="object-contain"
-                                  fill
-                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
-                                  src={logo.src}
+                                  height={logoH}
+                                  width={logoW}
+                                  src={footerLogo}
                               />
                           )
                       )}

@@ -103,6 +103,8 @@ export default async function Product({ params, searchParams }: ProductPageProps
               <Reviews productId={product.entityId} />
             </Suspense>
           </div>*/}
+
+
         </NextIntlClientProvider>
       </div>
 
