@@ -44,6 +44,8 @@ interface Props {
   locales?: { id: string; region: string; language: string }[]
 }
 
+import logoHC from '../../../app/[locale]/(default)/_images/logo_white.png';
+
 export const Header = forwardRef(function Header(
   { cartHref, cartCount, accountHref, links, logo, activeLocale, locales, ...rest }: Props,
   ref: Ref<HTMLDivElement>
@@ -146,15 +148,13 @@ export const Header = forwardRef(function Header(
             href="/"
             className="mx-auto rounded-xl ring-primary focus-visible:outline-0 focus-visible:ring-2"
           >
-            {typeof logo === 'object' && logo?.url ? (
-              <Image src={logo.url} fill sizes="400px" alt={logo.altText} />
-            ) : (
-              typeof logo === 'string' && (
-                <span className="font-heading text-lg font-semibold leading-none text-foreground @xl:text-2xl">
-                  {logo}
-                </span>
-              )
-            )}
+            {/*{typeof logo === 'object' && logo?.url ? (*/}
+              <Image src={logoHC}  sizes="42px" alt={"logo"} />
+            {/*) : (*/}
+            {/*  typeof logo === 'string' && (*/}
+
+            {/*  )*/}
+            {/*)}*/}
           </CustomLink>
 
           <div className="ml-auto flex items-center gap-2 transition-colors duration-300">

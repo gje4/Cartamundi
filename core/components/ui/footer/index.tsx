@@ -39,6 +39,10 @@ interface Props {
   className?: string;
 }
 
+// @ts-ignore
+import logoHC from '../../../app/[locale]/(default)/_images/logo@2x.png';
+
+
 export const Footer = function Footer({
   logo,
   sections,
@@ -63,7 +67,7 @@ export const Footer = function Footer({
             {/* Contact Information */}
             {contactInformation?.address || contactInformation?.phone ? (
                     <CustomLink
-                        className="relative inline-block h-5 w-32 rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
+                        className="relative inline-block h-5 w-64  rounded-lg ring-primary focus-visible:outline-0 focus-visible:ring-2"
                         href="#"
                     >
                       {typeof logo === 'string' ? (
@@ -73,9 +77,9 @@ export const Footer = function Footer({
                               <Image
                                   alt={logo.altText ?? 'Logo'}
                                   className="object-contain"
-                                  fill
-                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
-                                  src={logo.src}
+                                  height={600}
+                                  width={300}
+                                  src={logoHC}
                               />
                           )
                       )}

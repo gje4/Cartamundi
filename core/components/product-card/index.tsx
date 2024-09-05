@@ -108,7 +108,7 @@ export const ProductCard = async ({
           basePrice={prices?.basePrice}
           showCompare={showCompare}
           subtitle={brand?.name}
-          customFields={removeEdgesAndNodes(customFields)}
+          // customFields={removeEdgesAndNodes(customFields)}
       />
   );
 };
