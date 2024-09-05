@@ -161,7 +161,35 @@ h1, h2, h3, h4, h5, h6 {
 .st_subscribe-and-save input:checked ~ .st_check::before {
   transform: translate(18px, -50%);
 }
+.st_arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.st_arrow-left {
+  left: 20px;
+}
+.st_arrow-right {
+  right: 20px;
+}
+.st_slides {
+  position: absolute;
+  left: 50%;
+  overflow: hidden;
+  transform: translateX(300%);
+  transition: transform 250ms ease-out;
+  width: max-content;
+}
+.st_slides.active {
+  transform: translateX(-50%);
+}
 
+h1,h2,h3,h4,h5,h6 {
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;
+  color: var(--primary-color)!important;
+  font-weight: 600!important;
+}
 
 @media(max-width: 1250px) {
   .st_product-single-page-row--wrapper {

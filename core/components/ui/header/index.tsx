@@ -113,6 +113,23 @@ export const Header = forwardRef(function Header(
   imageLogo.src = imageLogo.src.replace("{:size}", logoW+"x"+logoH);
   let logoType = imageLogo ? "image" : "text";
 
+  function toggleSlides() {
+    let slidesWrapper = document.querySelector('.st_slides--wrapper');
+    let activeSlide = slidesWrapper!.querySelector('.active');
+    activeSlide?.classList.remove('active');
+    let nextElementSibling = activeSlide!.nextElementSibling;
+    console.log("wwwwwwwwwwwwwwwwwww", activeSlide);
+    if(nextElementSibling !== null) {
+      nextElementSibling.classList.add('active');
+      return;
+    }
+    let previousElementSibling = activeSlide!.previousElementSibling;
+    if(previousElementSibling !== null) {
+      previousElementSibling.classList.add('active');
+      return;
+    }
+  }
+
 
   return (
       <ReactHeadroom
@@ -309,11 +326,33 @@ export const Header = forwardRef(function Header(
               </div>
             </nav>
 
-            {/* Search Dropdown */}
-            <div
-                ref={searchRef}
-                className={clsx(
-                    'absolute inset-x-0 mx-1.5 mt-1.5 flex items-center gap-3 overflow-y-auto rounded-[24px] px-3 py-4 shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @xl:px-5 @4xl:mx-5',
+          <div className="st_banner--wrapper relative bg-[#BC2251] px-[60px] py-[10px] min-h-[40px] text-[#fff] text-[14px] text-center leading-[1.3] overflow-hidden">
+            <button onClick={toggleSlides} type="button" className="st_arrow st_arrow-left">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                   fill="#e8eaed">
+                <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/>
+              </svg>
+            </button>
+            <div className="st_slides--wrapper">
+              <a className="st_slides active underline" href="#">Get FREE shipping on $200 orders. Get Mood+™ FREE on $250 orders,
+                plus a FREE 12=pack of GBX
+                Pep® on $300 orders! Ends September 30.</a>
+              <a className="st_slides underline" href="#">New or upgrading Brand Partners get a FREE one-year membership with a
+                $129.95 minimum Subscribe & Save order. Ends September 15. Code: WELCOME.</a>
+            </div>
+            <button onClick={toggleSlides} type="button" className="st_arrow st_arrow-right">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                   fill="#e8eaed">
+                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/>
+              </svg>
+            </button>
+          </div>
+
+          {/* Search Dropdown */}
+          <div
+              ref={searchRef}
+              className={clsx(
+                  'absolute inset-x-0 mx-1.5 mt-1.5 flex items-center gap-3 overflow-y-auto rounded-[24px] px-3 py-4 shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @xl:px-5 @4xl:mx-5',
                     searchOpen
                         ? 'scale-100 bg-background opacity-100'
                         : 'pointer-events-none scale-[0.99] select-none bg-transparent opacity-0'

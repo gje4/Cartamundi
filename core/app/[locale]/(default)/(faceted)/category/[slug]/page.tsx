@@ -69,7 +69,7 @@ export default async function Category({ params: { locale, slug }, searchParams 
   const { hasNextPage, hasPreviousPage, endCursor, startCursor } = productsCollection.pageInfo;
 
   return (
-      <div className="group">
+      <div className="group max-w-[1520px] mx-auto">
         <Breadcrumbs category={category} />
         <NextIntlClientProvider
             locale={locale}
@@ -79,7 +79,7 @@ export default async function Category({ params: { locale, slug }, searchParams 
               AddToCart: messages.AddToCart ?? {},
             }}
         >
-          <div className="md:mb-8 lg:flex lg:flex-row lg:items-center lg:justify-between">
+          <div className="md:mb-8 lg:flex lg:flex-row lg:items-center lg:justify-between mt-[3rem]">
             <h1 className="mb-4 text-4xl text-[#522d72] lg:mb-0 lg:text-5xl">{category.name}</h1>
 
             <div className="flex flex-col items-center gap-3 whitespace-nowrap md:flex-row">

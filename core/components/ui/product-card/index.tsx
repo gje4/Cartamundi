@@ -61,7 +61,7 @@ export const ProductCard = function ProductCard({
     let calculateDiscountPrice = typeof  basePrice != "undefined" ? (basePrice.value - (basePrice.value / 10)).toFixed(2) : "";
 
   return (
-      <div className="st_single-card--wrapper">
+      <div className="st_single-card--wrapper flex flex-col justify-between">
         <CustomLink
             className={clsx(
                 'group flex cursor-pointer flex-col rounded-xl text-foreground ring-primary focus-visible:outline-0 focus-visible:ring-2 mb-[16px]',
