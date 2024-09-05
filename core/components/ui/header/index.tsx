@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import {usePathname, useSearchParams} from 'next/navigation'
 import { Ref, forwardRef, useEffect, useRef, useState } from 'react'
 import ReactHeadroom from 'react-headroom'
 
@@ -14,6 +14,7 @@ import {
 import clsx from 'clsx'
 import { ArrowRight, ChevronDown, Search, SearchIcon, ShoppingBag, User } from 'lucide-react'
 import { Link as CustomLink } from '~/components/link'
+import {Rep, RepSite} from "~/components/ui/header/rep-site";
 
 interface Image {
   src?: string
@@ -49,6 +50,7 @@ export const Header = forwardRef(function Header(
   ref: Ref<HTMLDivElement>
 ) {
   const [navOpen, setNavOpen] = useState(false)
+  const [repInfo, setRepInfo] = useState<Rep | undefined>(undefined);
   const pathname = usePathname()
   const container = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -57,6 +59,7 @@ export const Header = forwardRef(function Header(
   const [selectedCategory, setSelectedCategory] = useState<number | null>(0)
   const [searchOpen, setSearchOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(activeLocale)
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     setNavOpen(false)
@@ -98,6 +101,10 @@ export const Header = forwardRef(function Header(
     }
   }, [searchOpen])
 
+  useEffect(() => {
+    const repOps = new RepSite(document);
+    setRepInfo(repOps.getRep(searchParams));
+  }, [searchParams]);
 
   let imageLogo:any = (typeof logo == 'object' && typeof logo.src != "undefined") ? logo: false;
   let logoRatio = 2.5;
@@ -105,6 +112,7 @@ export const Header = forwardRef(function Header(
   let logoH = logoW/logoRatio;
   imageLogo.src = imageLogo.src.replace("{:size}", logoW+"x"+logoH);
   let logoType = imageLogo ? "image" : "text";
+
 
   return (
       <ReactHeadroom
@@ -119,13 +127,13 @@ export const Header = forwardRef(function Header(
             transition: 'transform .5s ease-in-out',
           }}
       >
-          <div
+        {(repInfo && <div
               className="py-[6px] bg-[#000]">
             <div className="container ml-auto mr-auto flex items-center flex-wrap gap-x-[6px] gap-y-[6px] px-[10px] text-sm text-[#fff]">
               <span>You are shopping with:</span>
-              <span><b>Milan Stankovic</b></span>
+              <span><b>{repInfo?.name}</b></span>
             </div>
-          </div>
+          </div>)}
         <div
             ref={ref}
             onMouseLeave={() => setNavOpen(false)}
