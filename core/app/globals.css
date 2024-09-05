@@ -184,6 +184,13 @@ h1, h2, h3, h4, h5, h6 {
 .st_slides.active {
   transform: translateX(-50%);
 }
+.st_quantity-input::-webkit-outer-spin-button,
+.st_quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.st_quantity-input {
+  -moz-appearance: textfield;
+}
 
 h1,h2,h3,h4,h5,h6 {
   font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;

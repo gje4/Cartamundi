@@ -89,7 +89,7 @@ export default async function Product({ params, searchParams }: ProductPageProps
     <>
       {category && <Breadcrumbs category={category} />}
 
-      <div className="st_product-single-page-row--wrapper mt-[20px] grid max-w-[1220px] mx-auto gap-[40px] lg:p-[20px]">
+      <div className="st_product-single-page-row--wrapper mt-[3rem] grid max-w-[1220px] mx-auto gap-[40px] lg:p-[20px]">
         <NextIntlClientProvider
           locale={locale}
           messages={{ Product: messages.Product ?? {}, AddToCart: messages.AddToCart ?? {} }}
