@@ -115,16 +115,19 @@ export const ProductForm = ({ data: product }: Props) => {
       { icon: <Check className="text-success-secondary" /> },
     );
   };
-  const [checked, setChecked] = useState(false);
 
-  const toggleChecked = () => {
-    setChecked(!checked);
+  const [checked, setChecked] = useState<number>(0);
+
+  function inputCheck(index: number) {
+    setChecked(index);
   }
 
   let basePrice = (product.prices!.basePrice!.value).toFixed(2);
   let parseBasePrice = parseFloat(basePrice);
   let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
 
+  let discountedAmount = 0.25 * parseFloat(basePrice);
+  let biggerDiscountedPrice = (parseBasePrice - discountedAmount).toFixed(2);
 
   return (
     <FormProvider handleSubmit={handleSubmit} register={register} {...methods}>
@@ -158,8 +161,47 @@ export const ProductForm = ({ data: product }: Props) => {
 
           return null;
         })}
+        <div className={`st_custom-radio-button`}>
+          <div>
+            <label className={`st_radio-label_JS ${0 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="one_time_save">
+              <input
+                  className="st_radio-input_JS"
+                  type="radio"
+                  name="subscribe_and_save"
+                  id="one_time_save"
+                  checked={0 === checked}
+                  onChange={() => inputCheck(0)}
+              />
+              <span className="st_circle"></span>
+              <span>One-Time-Save 14%</span>
+              <span className="ml-auto st_price">${basePrice}</span>
+            </label>
+          </div>
+          <div>
+            <label className={`st_radio-label_JS ${1 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="subscribe_save">
+              <input
+                  className="st_radio-input_JS"
+                  type="radio"
+                  name="subscribe_and_save"
+                  id="subscribe_save"
+                  checked={1 === checked}
+                  onChange={() => inputCheck(1)}
+              />
+              <span className="st_circle"></span>
+              <span className="flex flex-col">
+                <span>Subscribe & Save</span>
+              </span>
+              <span className="ml-auto flex items-center gap-[6px]">
+                <span className="st_price line-through">${basePrice}</span>
+                <span className="st_price font-bold">${discountedPrice}</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div>interest-free payments of <span>${biggerDiscountedPrice}.</span></div>
 
-        <div className="st_subscribe-and-save">
+
+        {/*<div className="st_subscribe-and-save">
           <label htmlFor={`subscribe_and_save`}>
             <input
                 className="st_checkbox_JS"
@@ -172,15 +214,11 @@ export const ProductForm = ({ data: product }: Props) => {
             <span className="st_check"></span>
             <span className="absolute block pl-[50px] w-max text-[12px] text-[black] lg:text-[14px]">Subscribe and save 10% (${discountedPrice})</span>
           </label>
-        </div>
+        </div>*/}
 
-        <div className="flex gap-[24px]">
+        <div className="flex flex-wrap gap-x-[24px] gap-y-[12px]">
           <QuantityField/>
           <div className="flex items-end gap-[6px]">
-            {checked &&
-                <div className="text-[32px] text-[#3F2A56] leading-[1.3]">${discountedPrice}</div>
-            }
-            <div className={`${!checked ? 'text-[32px] text-[#3F2A56] leading-[1.3]' : 'text-[20px] line-through text-[#747474]'}`}>${basePrice}</div>
           </div>
           {/*{product.prices && (
               <div className="grid">

@@ -8,7 +8,6 @@ import { Link as CustomLink } from '~/components/link';
 import Badge from '../badge';
 
 import Price, { ProductPrice } from './price';
-import StSwitch from "~/components/ui/product-card/switch";
 
 // import Compare from '@/vibes/soul/components/product-card/compare'
 
@@ -71,14 +70,14 @@ export const ProductCard = function ProductCard({
             id={id}
         >
           <div
-              className="st_collections-page-inner--wrapper relative aspect-[5/6] overflow-hidden rounded-xl @6xl:min-w-80">
+              className="st_collections-page-inner--wrapper relative overflow-hidden rounded-xl @6xl:min-w-80 flex justify-center">
             {badge && (
                 <Badge className="absolute left-2.5 top-2.5 @4xl:left-4 @4xl:top-4">{badge}</Badge>
             )}
             {image && (
                 <BcImage
                     alt="Category card image"
-                    className="w-full select-none bg-contrast-100 object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                    className="select-none bg-contrast-100 transition-transform duration-300 ease-in-out group-hover:scale-105 !w-[300px] !h-[200px] object-contain bg-[#fff] !relative"
                     fill
                     sizes="(max-width: 768px) 70vw, 33vw"
                     src={image.src}
