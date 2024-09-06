@@ -11,6 +11,7 @@ import { MultipleChoiceFieldFragment } from './fragment';
 
 interface Props {
   option: FragmentOf<typeof MultipleChoiceFieldFragment>;
+  subscribeAndSave:boolean;
 }
 
 interface InteractionOptions {
@@ -19,7 +20,7 @@ interface InteractionOptions {
   prefetch?: boolean;
 }
 
-export const MultipleChoiceField = ({ option }: Props) => {
+export const MultipleChoiceField = ({ option, subscribeAndSave }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -52,6 +53,10 @@ export const MultipleChoiceField = ({ option }: Props) => {
   const selectedValue = values.find((value) => value.isSelected)?.entityId.toString();
   const defaultValue = values.find((value) => value.isDefault)?.entityId.toString();
 
+  const subscribeOnly = option.displayName.indexOf("---subscribe-only---") > -1;
+  const shouldShow = subscribeAndSave === subscribeOnly;
+  let displayName = option.displayName.replace("---subscribe-only---", "");
+
   const { field, fieldState } = useProductFieldController({
     name: `attribute_${option.entityId}`,
     rules: {
@@ -64,7 +69,7 @@ export const MultipleChoiceField = ({ option }: Props) => {
   switch (option.displayStyle) {
     case 'Swatch':
       return (
-        <div key={option.entityId}>
+          (shouldShow && (<div key={option.entityId}>
           <Label className="mb-2 inline-block font-semibold" id={`label-${option.entityId}`}>
             {option.displayName}
           </Label>
@@ -96,12 +101,12 @@ export const MultipleChoiceField = ({ option }: Props) => {
             value={field.value?.toString()}
           />
           {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        </div>
+        </div>))
       );
 
     case 'RectangleBoxes':
       return (
-        <div key={option.entityId}>
+          (shouldShow && (<div key={option.entityId}>
           <Label className="mb-2 inline-block font-semibold" id={`label-${option.entityId}`}>
             {option.displayName}
           </Label>
@@ -127,12 +132,12 @@ export const MultipleChoiceField = ({ option }: Props) => {
             value={field.value?.toString()}
           />
           {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        </div>
+        </div>))
       );
 
     case 'RadioButtons':
       return (
-        <div key={option.entityId}>
+          (shouldShow && (<div key={option.entityId}>
           <Label className="mb-2 inline-block font-semibold" id={`label-${option.entityId}`}>
             {option.displayName}
           </Label>
@@ -161,12 +166,12 @@ export const MultipleChoiceField = ({ option }: Props) => {
             value={field.value?.toString()}
           />
           {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        </div>
+        </div>))
       );
 
     case 'DropdownList':
       return (
-        <div key={option.entityId}>
+          (shouldShow && (<div key={option.entityId}>
           <Label className="mb-2 inline-block font-semibold" htmlFor={`label-${option.entityId}`}>
             {option.displayName}
           </Label>
@@ -195,15 +200,15 @@ export const MultipleChoiceField = ({ option }: Props) => {
             value={field.value?.toString()}
           />
           {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        </div>
+        </div>))
       );
 
     case 'ProductPickList':
     case 'ProductPickListWithImages':
       return (
-        <div key={option.entityId}>
+          (shouldShow && (<div key={option.entityId}>
           <Label className="mb-2 inline-block font-semibold" id={`label-${option.entityId}`}>
-            {option.displayName}
+            {displayName}
           </Label>
           <PickList
             aria-labelledby={`label-${option.entityId}`}
@@ -241,7 +246,7 @@ export const MultipleChoiceField = ({ option }: Props) => {
             value={field.value?.toString()}
           />
           {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        </div>
+        </div>))
       );
 
     default:

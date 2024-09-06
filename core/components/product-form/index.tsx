@@ -130,10 +130,10 @@ export const ProductForm = ({ data: product }: Props) => {
     <FormProvider handleSubmit={handleSubmit} register={register} {...methods}>
       <form className="flex flex-col gap-6 @container" onSubmit={handleSubmit(productFormSubmit)}>
         <input type="hidden" value={product.entityId} {...register('product_id')} />
-
         {productOptions.map((option) => {
+          let subscribeAndSave = false;
           if (option.__typename === 'MultipleChoiceOption') {
-            return <MultipleChoiceField key={option.entityId} option={option}/>;
+            return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} />;
           }
 
           if (option.__typename === 'CheckboxOption') {
@@ -172,6 +172,17 @@ export const ProductForm = ({ data: product }: Props) => {
             <span className="st_check"></span>
             <span className="absolute block pl-[50px] w-max text-[12px] text-[black] lg:text-[14px]">Subscribe and save 10% (${discountedPrice})</span>
           </label>
+        </div>
+
+        <div className="st_subscribe-and-save-options">
+          {
+            productOptions.map((option) => {
+              let subscribeAndSave = true;
+              if (option.__typename === 'MultipleChoiceOption') {
+                return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave}/>;
+              }
+            })
+          }
         </div>
 
         <div className="flex gap-[24px]">
