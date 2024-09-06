@@ -96,8 +96,6 @@ const CarouselRelated = ({ className, title, pageSize = 4, products, ...props }:
     };
   }, [api, onSelect]);
 
-
-  console.log("wrqrrqrqrqrqrqrq",products);
   return (
       <>
         {products.length > 0 &&

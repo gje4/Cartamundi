@@ -46,7 +46,7 @@ export default async function DefaultLayout({ children, params: { locale } }: Pr
     <>
       <Header data={data.site} />
 
-        <main className="flex-1 mt-22 fw:container px-[20px] sm:px-10 lg:px-12 2xl:mx-auto 2xl:px-0">
+        <main className="flex-1 mt-22 fw:container 2xl:mx-auto px-0">
 
             {children}</main>
 
