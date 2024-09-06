@@ -197,6 +197,46 @@ h1,h2,h3,h4,h5,h6 {
   color: var(--primary-color)!important;
   font-weight: 600!important;
 }
+.st_custom-radio-button label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  padding-inline: 16px;
+  padding-block: 10px;
+  cursor: pointer;
+}
+.st_custom-radio-button input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.st_custom-radio-button .st_circle {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: block;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+}
+.st_custom-radio-button .st_circle:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0;
+}
+.st_custom-radio-button input:checked ~ .st_circle:before {
+  opacity: 1;
+  background-color: var(--primary-color);
+}
 
 @media(max-width: 1250px) {
   .st_product-single-page-row--wrapper {

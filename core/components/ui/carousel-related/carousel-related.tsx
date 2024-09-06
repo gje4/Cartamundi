@@ -99,13 +99,13 @@ const CarouselRelated = ({ className, title, pageSize = 4, products, ...props }:
     <div
       aria-labelledby={titleId}
       aria-roledescription="carousel"
-      className={cn('relative', className)}
+      className={cn('relative max-w-[1520px] mx-auto mt-[30px] lg:mt-[0px]', className)}
       onKeyDownCapture={handleKeyDown}
       role="region"
       {...props}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black lg:text-4xl" id={titleId}>
+        <h2 className="text-3xl font-black leading-[1.3]" id={titleId}>
           {title}
         </h2>
         <span className="no-wrap flex">
@@ -144,7 +144,7 @@ const CarouselRelated = ({ className, title, pageSize = 4, products, ...props }:
               aria-label={`${index + 1} of ${groupedProducts.length}`}
               aria-roledescription="slide"
               className={cn(
-                'grid min-w-0 shrink-0 grow-0 basis-full grid-cols-2 gap-6 px-4 md:grid-cols-4 lg:gap-8',
+                'grid min-w-0 shrink-0 grow-0 basis-full grid-cols-1 sm:grid-cols-2 gap-6 px-4 md:grid-cols-4 lg:gap-8',
                 !slidesInView.includes(index) && 'invisible',
               )}
               id={`${id}-slide-${index + 1}`}
