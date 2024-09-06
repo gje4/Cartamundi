@@ -89,6 +89,12 @@ h1, h2, h3, h4, h5, h6 {
 .st_product-collections-page--wrapper .st_single-card--wrapper:hover {
   box-shadow: 0 3px 6px #cacaca;
 }
+.st_product-collections-page--wrapper .st_single-card--wrapper h3 {
+  transition: color 250ms ease-in-out;
+}
+.st_product-collections-page--wrapper .st_single-card--wrapper:hover h3 {
+  color: var(--primary-color-light);
+}
 .st_product-collections-page--wrapper .st_single-card--wrapper a:hover img {
   scale: 1.1;
 }

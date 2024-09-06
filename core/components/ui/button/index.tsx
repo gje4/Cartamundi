@@ -57,7 +57,7 @@ export const Button = function Button({
       onClick={onClick}
       {...props}
     >
-      <div className={clsx(!asChild && 'h-full')}>
+      <div className={clsx(!asChild && 'h-full text-[#fff]')}>
         {/* Children */}
         <div
           className={clsx(
