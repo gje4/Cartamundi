@@ -58,7 +58,7 @@ export const RelatedProducts = async ({ productId }: Props) => {
           products={relatedProducts}
           showCart={true}
           showCompare={true}
-          title='Make it a bundle'
+          title='Frequently Bought Together'
       />
   );
 };

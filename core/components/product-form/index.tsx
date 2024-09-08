@@ -23,7 +23,7 @@ import { NumberField } from './fields/number-field';
 import { QuantityField } from './fields/quantity-field';
 import { TextField } from './fields/text-field';
 import { ProductFormData, useProductForm } from './use-product-form';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 interface Props {
   data: FragmentOf<typeof ProductItemFragment>;
@@ -63,14 +63,17 @@ export const ProductForm = ({ data: product }: Props) => {
   const t = useTranslations('Product.Form');
   const m = useTranslations('AddToCart');
   const productOptions = removeEdgesAndNodes(product.productOptions);
+  const productCustomFields = removeEdgesAndNodes(product.customFields)
   const { handleSubmit, register, ...methods } = useProductForm();
+  const [PV, setPV] = React.useState<number>(0);
+  const [SSPV, setSSPV] = React.useState<number>(0);
 
   let basePrice = (product.prices!.basePrice!.value).toFixed(2);
   let parseBasePrice = parseFloat(basePrice);
   let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
   let discountedAmount = 0.25 * parseBasePrice;
   let biggerDiscountedPrice = (discountedAmount).toFixed(2);
-  const [klarnaInstallment, setklarnaInstallment] = React.useState(biggerDiscountedPrice);
+  const [klarnaInstallment, setKlarnaInstallment] = React.useState(biggerDiscountedPrice);
   const format = useFormatter();
   const showPriceRange =
       product.prices?.priceRange.min.value !== product.prices?.priceRange.max.value;
@@ -142,7 +145,7 @@ export const ProductForm = ({ data: product }: Props) => {
     let discountedPrice = parseBasePrice * 0.9;
     let klarnaBasis = isSubscribeAndSave ? discountedPrice : parseBasePrice;
     let biggerDiscountedPrice = (0.25 * klarnaBasis).toFixed(2);
-    setklarnaInstallment(biggerDiscountedPrice);
+    setKlarnaInstallment(biggerDiscountedPrice);
   }
 
   function hasAtLeastOneSubscribe():boolean {
@@ -158,6 +161,28 @@ export const ProductForm = ({ data: product }: Props) => {
     return output;
   }
 
+  function productVolume() {
+    for(let i=0; i<productCustomFields.length; i++) {
+      let customField = productCustomFields[i];
+      if(customField["name"] === "PV") {
+        let PVFormatted = parseInt(customField["value"]);
+        setPV(PVFormatted);
+        setSSPV(Math.round(PVFormatted*0.75));
+        break;
+      }
+    }
+    return "";
+  }
+
+  function hasVolumes():boolean {
+    return PV !== 0
+  }
+
+  useEffect(() => {
+    productVolume();
+  }, []);
+
+
   return (
     <FormProvider handleSubmit={handleSubmit} register={register} {...methods}>
       <form className="flex flex-col gap-6 @container" onSubmit={handleSubmit(productFormSubmit)}>
@@ -170,23 +195,23 @@ export const ProductForm = ({ data: product }: Props) => {
           }
 
           if (option.__typename === 'CheckboxOption') {
-            return <CheckboxField key={option.entityId} option={option}/>;
+            return <CheckboxField key={option.entityId} option={option} />;
           }
 
           if (option.__typename === 'NumberFieldOption') {
-            return <NumberField key={option.entityId} option={option}/>;
+            return <NumberField key={option.entityId} option={option} />;
           }
 
           if (option.__typename === 'MultiLineTextFieldOption') {
-            return <MultiLineTextField key={option.entityId} option={option}/>;
+            return <MultiLineTextField key={option.entityId} option={option} />;
           }
 
           if (option.__typename === 'TextFieldOption') {
-            return <TextField key={option.entityId} option={option}/>;
+            return <TextField key={option.entityId} option={option} />;
           }
 
           if (option.__typename === 'DateFieldOption') {
-            return <DateField key={option.entityId} option={option}/>;
+            return <DateField key={option.entityId} option={option} />;
           }
 
           return null;
@@ -204,7 +229,7 @@ export const ProductForm = ({ data: product }: Props) => {
               />
               <span className="st_circle"></span>
               <span>One-Time-Purchase</span>
-              <span className="ml-auto st_price">${basePrice}</span>
+              <span className="ml-auto st_price">{(hasVolumes() && (<span className="st_volume">(PV: {PV})</span> ))} ${basePrice}</span>
             </label>
           </div>
           <div>
@@ -222,6 +247,7 @@ export const ProductForm = ({ data: product }: Props) => {
                 <span>Subscribe & Save 10%</span>
               </span>
               <span className="ml-auto flex items-center gap-[6px]">
+                {(hasVolumes() && (<span className="st_volume">(PV: {SSPV})</span>))}
                 <span className="st_price line-through">${basePrice}</span>
                 <span className="st_price font-bold">${discountedPrice}</span>
               </span>
@@ -245,7 +271,7 @@ export const ProductForm = ({ data: product }: Props) => {
               </defs>
             </svg>
           </div>
-          <div>Interest-Free Payments of <span>${klarnaInstallment}.</span></div>
+          <div>4 Interest-Free Payments of <span>${klarnaInstallment}.</span></div>
         </div>
 
         {/*<div className="st_subscribe-and-save">

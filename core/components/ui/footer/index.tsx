@@ -53,7 +53,6 @@ export const Footer = function Footer({
   className = '',
 }: Props) {
 
-  console.log("logo", logo)
 
   let imageLogo:any = (typeof logo == 'object' && typeof logo.src != "undefined") ? logo: false;
   let logoRatio = 2.5;
@@ -82,14 +81,13 @@ export const Footer = function Footer({
                       <span className="font-heading text-2xl font-semibold">{logo}</span>
                   ) : (
                       imageLogo?.src && (
-                          <img src="../../../../core/app/amare-logo-color.png" alt="logo"/>
-                          /*<Image
+                          <Image
                               alt={imageLogo.altText ?? 'Logo'}
                               className="object-contain"
                               height={logoH}
                               width={logoW}
                               src={footerLogo}
-                          />*/
+                          />
                       )
                   )}
                 </CustomLink>
