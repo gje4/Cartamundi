@@ -77,7 +77,7 @@ export const ProductCard = function ProductCard({
             {image && (
                 <BcImage
                     alt="Category card image"
-                    className="select-none bg-contrast-100 transition-transform duration-300 ease-in-out group-hover:scale-105 !w-[300px] !h-[200px] object-contain bg-[#fff] !relative"
+                    className="select-none bg-contrast-100 transition-transform duration-300 ease-in-out group-hover:scale-105 !w-[300px] !h-[200px] object-contain !bg-[#fff] !relative"
                     fill
                     sizes="(max-width: 768px) 70vw, 33vw"
                     src={image.src}

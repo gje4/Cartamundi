@@ -87,7 +87,7 @@ export default async function CartPage({ params: { locale } }: Props) {
   const lineItems = [...cart.lineItems.physicalItems, ...cart.lineItems.digitalItems];
 
   return (
-    <div>
+    <div className="max-w-[1520px] w-full mx-auto mt-[3rem]">
       <h1 className="pb-6 pt-36 text-4xl text-[#522d72] lg:pb-10 lg:text-5xl">{t('heading')}</h1>
       <div className="pb-12 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         <ul className="col-span-2">
@@ -96,7 +96,7 @@ export default async function CartPage({ params: { locale } }: Props) {
           ))}
         </ul>
 
-        <div className="col-span-1 col-start-2 lg:col-start-3">
+        <div className="col-span-1 md:col-span-1 col-start-2 lg:col-start-3">
           {checkout && <CheckoutSummary checkout={checkout} geography={geography} />}
 
           <NextIntlClientProvider locale={locale} messages={{ Cart }}>

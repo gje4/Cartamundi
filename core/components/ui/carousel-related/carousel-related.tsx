@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ReactNode, useCallback, useEffect, useId, useMemo, useState } from 'react';
 
 import { cn } from '~/lib/utils';
+import {Submit} from "~/components/product-form";
 
 type CarouselApi = UseEmblaCarouselType[1];
 
@@ -96,92 +97,96 @@ const CarouselRelated = ({ className, title, pageSize = 4, products, ...props }:
   }, [api, onSelect]);
 
   return (
-    <div
-      aria-labelledby={titleId}
-      aria-roledescription="carousel"
-      className={cn('relative max-w-[1520px] mx-auto mt-[30px] lg:mt-[0px]', className)}
-      onKeyDownCapture={handleKeyDown}
-      role="region"
-      {...props}
-    >
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black leading-[1.3]" id={titleId}>
-          {title}
-        </h2>
-        <span className="no-wrap flex">
+      <>
+        {products.length > 0 &&
+            <div
+                aria-labelledby={titleId}
+                aria-roledescription="carousel"
+                className={cn('relative max-w-[1520px] mx-auto mt-[30px] lg:mt-[0px]', className)}
+                onKeyDownCapture={handleKeyDown}
+                role="region"
+                {...props}
+            >
+              <div className="flex items-center justify-between">
+                <h2 className="text-3xl font-black leading-[1.3]" id={titleId}>
+                  {title}
+                </h2>
+                <span className="no-wrap flex">
           <button
-            aria-label="Previous products"
-            className={cn(
-              'inline-flex h-12 w-12 items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:text-gray-400',
-              api?.scrollSnapList().length === 1 && 'hidden',
-            )}
-            disabled={!canScrollPrev}
-            onClick={scrollPrev}
+              aria-label="Previous products"
+              className={cn(
+                  'inline-flex h-12 w-12 items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:text-gray-400',
+                  api?.scrollSnapList().length === 1 && 'hidden',
+              )}
+              disabled={!canScrollPrev}
+              onClick={scrollPrev}
           >
-            <ArrowLeft />
+            <ArrowLeft/>
             <span className="sr-only">Previous slide</span>
           </button>
 
           <button
-            aria-label="Next products"
-            className={cn(
-              'inline-flex h-12 w-12 items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:text-gray-400',
-              api?.scrollSnapList().length === 1 && 'hidden',
-            )}
-            disabled={!canScrollNext}
-            onClick={scrollNext}
+              aria-label="Next products"
+              className={cn(
+                  'inline-flex h-12 w-12 items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:text-gray-400',
+                  api?.scrollSnapList().length === 1 && 'hidden',
+              )}
+              disabled={!canScrollNext}
+              onClick={scrollNext}
           >
-            <ArrowRight />
+            <ArrowRight/>
             <span className="sr-only">Next slide</span>
           </button>
         </span>
-      </div>
+              </div>
 
-      <div className="-mx-2 overflow-hidden px-2" ref={carouselRef}>
-        <div className="-mx-4 mb-16 mt-8 flex lg:mt-10">
-          {groupedProducts.map((group, index) => (
-            <div
-              aria-label={`${index + 1} of ${groupedProducts.length}`}
-              aria-roledescription="slide"
-              className={cn(
-                'grid min-w-0 shrink-0 grow-0 basis-full grid-cols-1 sm:grid-cols-2 gap-6 px-4 md:grid-cols-4 lg:gap-8',
-                !slidesInView.includes(index) && 'invisible',
-              )}
-              id={`${id}-slide-${index + 1}`}
-              key={index}
-              role="group"
-            >
-              {group.map((item) => item)}
+              <div className="-mx-2 overflow-hidden px-2" ref={carouselRef}>
+                <div className="-mx-4 mb-16 mt-8 flex lg:mt-10">
+                  {groupedProducts.map((group, index) => (
+                      <div
+                          aria-label={`${index + 1} of ${groupedProducts.length}`}
+                          aria-roledescription="slide"
+                          className={cn(
+                              'grid min-w-0 shrink-0 grow-0 basis-full grid-cols-1 sm:grid-cols-2 gap-6 px-4 md:grid-cols-4 lg:gap-8 st_product-collections-page--wrapper',
+                              !slidesInView.includes(index) && 'invisible',
+                          )}
+                          id={`${id}-slide-${index + 1}`}
+                          key={index}
+                          role="group"
+                      >
+                        {group.map((item) => item)}
+                      </div>
+                  ))}
+                </div>
+              </div>
+
+              <div
+                  aria-label="Slides"
+                  className={cn(
+                      'no-wrap absolute bottom-1 flex w-full items-center justify-center gap-2',
+                      api?.scrollSnapList().length === 1 && 'hidden',
+                  )}
+                  role="tablist"
+              >
+                {groupedProducts.map((_, index) => (
+                    <button
+                        aria-controls={`${id}-slide-${index + 1}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                        aria-selected={selectedSnapIndex === index}
+                        className={cn(
+                            "h-7 w-7 p-0.5 after:block after:h-0.5 after:w-full after:bg-gray-400 after:content-[''] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20",
+                            selectedSnapIndex === index && 'after:bg-black',
+                        )}
+                        key={index}
+                        onClick={() => api?.scrollTo(index)}
+                        role="tab"
+                    />
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div
-        aria-label="Slides"
-        className={cn(
-          'no-wrap absolute bottom-1 flex w-full items-center justify-center gap-2',
-          api?.scrollSnapList().length === 1 && 'hidden',
-        )}
-        role="tablist"
-      >
-        {groupedProducts.map((_, index) => (
-          <button
-            aria-controls={`${id}-slide-${index + 1}`}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-selected={selectedSnapIndex === index}
-            className={cn(
-              "h-7 w-7 p-0.5 after:block after:h-0.5 after:w-full after:bg-gray-400 after:content-[''] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20",
-              selectedSnapIndex === index && 'after:bg-black',
-            )}
-            key={index}
-            onClick={() => api?.scrollTo(index)}
-            role="tab"
-          />
-        ))}
-      </div>
-    </div>
+        }
+      </>
   );
 };
 
-export { CarouselRelated };
+export {CarouselRelated};
