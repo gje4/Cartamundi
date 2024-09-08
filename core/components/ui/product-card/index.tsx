@@ -105,7 +105,7 @@ export const ProductCard = function ProductCard({
                   </div>
               }
               <a className="bg-[#522D72] text-[#fff] text-center w-full block px-[24px] py-[12px] cursor-pointer rounded-[50px]"
-                 href={href}>View Products</a>
+                 href={href}>View Product</a>
               {/*{price && <Price price={price}/>}*/}
           </div>
       </div>

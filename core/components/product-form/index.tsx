@@ -23,7 +23,7 @@ import { NumberField } from './fields/number-field';
 import { QuantityField } from './fields/quantity-field';
 import { TextField } from './fields/text-field';
 import { ProductFormData, useProductForm } from './use-product-form';
-import {useState} from "react";
+import React, {useState} from "react";
 
 interface Props {
   data: FragmentOf<typeof ProductItemFragment>;
@@ -64,6 +64,13 @@ export const ProductForm = ({ data: product }: Props) => {
   const m = useTranslations('AddToCart');
   const productOptions = removeEdgesAndNodes(product.productOptions);
   const { handleSubmit, register, ...methods } = useProductForm();
+
+  let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+  let parseBasePrice = parseFloat(basePrice);
+  let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
+  let discountedAmount = 0.25 * parseBasePrice;
+  let biggerDiscountedPrice = (discountedAmount).toFixed(2);
+  const [klarnaInstallment, setklarnaInstallment] = React.useState(biggerDiscountedPrice);
   const format = useFormatter();
   const showPriceRange =
       product.prices?.priceRange.min.value !== product.prices?.priceRange.max.value;
@@ -121,20 +128,35 @@ export const ProductForm = ({ data: product }: Props) => {
 
   function toggleBundleAndSave(open:boolean) {
       setBundleAndSaveOpen(open);
+      recalculateKlarna(open);
   }
 
   function inputCheck(index: number) {
-    setChecked(index);
-    toggleBundleAndSave(index === 1);
+      setChecked(index);
+      toggleBundleAndSave(index === 1);
   }
 
+  function recalculateKlarna(isSubscribeAndSave: boolean):void {
+    let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+    let parseBasePrice = parseFloat(basePrice);
+    let discountedPrice = parseBasePrice * 0.9;
+    let klarnaBasis = isSubscribeAndSave ? discountedPrice : parseBasePrice;
+    let biggerDiscountedPrice = (0.25 * klarnaBasis).toFixed(2);
+    setklarnaInstallment(biggerDiscountedPrice);
+  }
 
-  let basePrice = (product.prices!.basePrice!.value).toFixed(2);
-  let parseBasePrice = parseFloat(basePrice);
-  let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
-
-  let discountedAmount = 0.25 * parseFloat(basePrice);
-  let biggerDiscountedPrice = (parseBasePrice - discountedAmount).toFixed(2);
+  function hasAtLeastOneSubscribe():boolean {
+    let output = false;
+    for(let i=0; i< productOptions.length; i++) {
+      let option = productOptions[i];
+      let subscribeOnly = option.displayName.indexOf("---subscribe-only---") > -1;
+      if (subscribeOnly) {
+        output = true;
+        break;
+      }
+    }
+    return output;
+  }
 
   return (
     <FormProvider handleSubmit={handleSubmit} register={register} {...methods}>
@@ -181,7 +203,7 @@ export const ProductForm = ({ data: product }: Props) => {
                   onChange={() => inputCheck(0)}
               />
               <span className="st_circle"></span>
-              <span>One-Time-Save 14%</span>
+              <span>One-Time-Purchase</span>
               <span className="ml-auto st_price">${basePrice}</span>
             </label>
           </div>
@@ -197,7 +219,7 @@ export const ProductForm = ({ data: product }: Props) => {
               />
               <span className="st_circle"></span>
               <span className="flex flex-col">
-                <span>Subscribe & Save</span>
+                <span>Subscribe & Save 10%</span>
               </span>
               <span className="ml-auto flex items-center gap-[6px]">
                 <span className="st_price line-through">${basePrice}</span>
@@ -206,7 +228,7 @@ export const ProductForm = ({ data: product }: Props) => {
             </label>
           </div>
         </div>
-        <div className="flex items-center gap-[12px] border border-[#ffa8cd] px-[10px] py-[20px]">
+        <div className="flex items-center gap-[12px] border-t border-t-[#ffa8cd] px-[10px] py-[20px]">
           <div>
             <svg role="img" xmlns="http://www.w3.org/2000/svg" width="71.25" height="30"
                  viewBox="0 0 71.25 30" aria-label="Klarna" version="2.1">
@@ -223,7 +245,7 @@ export const ProductForm = ({ data: product }: Props) => {
               </defs>
             </svg>
           </div>
-          <div>Interest-Free Payments of <span>${biggerDiscountedPrice}.</span></div>
+          <div>Interest-Free Payments of <span>${klarnaInstallment}.</span></div>
         </div>
 
         {/*<div className="st_subscribe-and-save">
@@ -241,12 +263,12 @@ export const ProductForm = ({ data: product }: Props) => {
           </label>
         </div>*/}
 
-        {(bundleAndSaveOpen && (<div className="st_subscribe-and-save-options">
+        {(bundleAndSaveOpen && hasAtLeastOneSubscribe() && (<div className="st_subscribe-and-save-options">
           {
             productOptions.map((option) => {
               let subscribeAndSave = true;
               if (option.__typename === 'MultipleChoiceOption') {
-                return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave}/>;
+                return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} />;
               }
             })
           }
