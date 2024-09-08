@@ -68,7 +68,8 @@ export const ProductForm = ({ data: product }: Props) => {
   const [PV, setPV] = React.useState<number>(0);
   const [SSPV, setSSPV] = React.useState<number>(0);
 
-  let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+  //let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+  let basePrice = (product.prices!.price!.value).toFixed(2);
   let parseBasePrice = parseFloat(basePrice);
   let discountedPrice = (parseBasePrice - (parseBasePrice / 10)).toFixed(2);
   let discountedAmount = 0.25 * parseBasePrice;
@@ -139,8 +140,12 @@ export const ProductForm = ({ data: product }: Props) => {
       toggleBundleAndSave(index === 1);
   }
 
+  useEffect(() => {
+    inputCheck(checked);
+  }, []);
+
   function recalculateKlarna(isSubscribeAndSave: boolean):void {
-    let basePrice = (product.prices!.basePrice!.value).toFixed(2);
+    let basePrice = (product.prices!.price!.value).toFixed(2);
     let parseBasePrice = parseFloat(basePrice);
     let discountedPrice = parseBasePrice * 0.9;
     let klarnaBasis = isSubscribeAndSave ? discountedPrice : parseBasePrice;
@@ -167,7 +172,7 @@ export const ProductForm = ({ data: product }: Props) => {
       if(customField["name"] === "PV") {
         let PVFormatted = parseInt(customField["value"]);
         setPV(PVFormatted);
-        setSSPV(Math.round(PVFormatted*0.75));
+        setSSPV(Math.round(PVFormatted*0.9));
         break;
       }
     }
@@ -217,6 +222,7 @@ export const ProductForm = ({ data: product }: Props) => {
           return null;
         })}
         <div className={`st_custom-radio-button`}>
+          "checked: " {checked}
           <div>
             <label className={`st_radio-label_JS ${0 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="one_time_save">
               <input

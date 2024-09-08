@@ -135,7 +135,7 @@ export const Header = forwardRef(function Header(
   return (
       <ReactHeadroom
           {...rest}
-          className="sticky top-0 z-30 !h-0 w-full @container"
+          className="st_header sticky top-0 !h-0 w-full @container"
           upTolerance={0}
           onUnpin={() => setSearchOpen(false)}
           style={{
@@ -404,7 +404,7 @@ export const Header = forwardRef(function Header(
             <div
                 ref={menuRef}
                 className={clsx(
-                    'mx-1.5 mt-1.5 overflow-y-auto rounded-[24px] shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @4xl:mx-5',
+                    'st_header_subnav mx-1.5 mt-1.5 overflow-y-auto rounded-[24px] shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @4xl:mx-5',
                     navOpen
                         ? 'h-[calc(100dvh-66px)] scale-100 bg-background opacity-100 @4xl:h-full @4xl:max-h-96'
                         : 'pointer-events-none h-0 scale-[0.99] select-none bg-transparent opacity-0'

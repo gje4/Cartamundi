@@ -6,6 +6,11 @@ import { logoTransformer } from '~/data-transformers/logo-transformer';
 import { localeLanguageRegionMap } from '~/i18n';
 
 import { Header as ComponentsHeader } from '../ui/header';
+import {cookies} from "next/headers";
+import {getChannelIdFromLocale} from "~/channels.config";
+import {NextResponse} from "next/server";
+import {useSearchParams } from 'next/navigation';
+import { getCart } from '~/client/queries/get-cart';
 
 export const StoreLogoFragment = graphql(`
   fragment StoreLogoFragment on Settings {
@@ -77,11 +82,25 @@ export const Header = async ({ data }: Props) => {
     })),
   }));
 
+
+  async function getCartCount() {
+    "use client"
+    const cartId = cookies().get('cartId')?.value;
+    if (cartId) {
+      const cart = await getCart(cartId, getChannelIdFromLocale(locale));
+      return cart?.lineItems?.totalQuantity ?? 0;
+    }
+
+    return 0;
+  }
+
+
   return (
     <ComponentsHeader
       accountHref={customerId ? '/account' : '/login'}
       activeLocale={locale}
       cartHref="/cart"
+      cartCount={await getCartCount()}
       links={links}
       locales={localeLanguageRegionMap}
       logo={data.settings ? logoTransformer(data.settings) : undefined}

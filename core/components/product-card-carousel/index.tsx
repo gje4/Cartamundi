@@ -29,7 +29,6 @@ export const ProductCardCarousel = ({
   if (products.length === 0) {
     return null;
   }
-console.log("products card", products)
   const items = products.map((product) => (
     <ProductCard
       imageSize="tall"
@@ -39,7 +38,6 @@ console.log("products card", products)
       showCompare={false}
     />
   ));
-  console.log("items card", items)
 
   return <CarouselRelated className="mb-14" products={items} title={title} />;
 };

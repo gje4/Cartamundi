@@ -79,7 +79,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .st_product-collections-page--wrapper .st_single-card--wrapper {
   padding: 15px;
-  border: 1px solid #e7eaec;
+  /*border: 1px solid #e7eaec;*/
+  border: 1px solid #c1c1c1;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -296,6 +297,38 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 
+/* START - Darko */
+
+.st_header_subnav {
+  background: white;
+  margin: 0;
+  border-radius: 0;
+}
+
+.st_header_subnav a {
+  position: relative;
+}
+.st_header_subnav a:hover {
+  border-radius: 0;
+  background: none;
+}
+
+.st_header_subnav a:after {
+  content: "";
+  position:absolute;
+  height:3px;
+  left:0;
+  bottom:0;
+  width:0;
+  background:#BC2251;
+  transition: width 0.2s;
+}
+
+.st_header_subnav a:hover::after {
+  width:70%;
+}
+/* END - Darko */
+
 
 .st_volume {
   font-size: 1rem;
@@ -304,6 +337,10 @@ h1,h2,h3,h4,h5,h6 {
   font-style: normal;
 }
 
-.st_cart_remove_button {
+.st_cart_button {
   background-color: rgb(82 45 114);
+}
+
+.st_header {
+  z-index:100000;
 }

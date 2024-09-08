@@ -6,7 +6,7 @@ export const MultipleChoiceFieldFragment = graphql(`
     displayName
     displayStyle
     isRequired
-    values(first: 10) {
+    values(first: 30) {
       edges {
         node {
           entityId

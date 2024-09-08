@@ -13,9 +13,9 @@ const Input = forwardRef<ElementRef<'input'>, Props>(
     <div className={cn('relative', className)}>
       <input
         className={cn(
-          'peer w-full border-2 border-gray-200 px-4 py-2.5 text-base placeholder:text-gray-500 hover:border-primary focus-visible:border-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:bg-gray-100 disabled:hover:border-gray-200',
+          'peer w-full border-2 border-gray-300 px-4 py-2.5 text-base placeholder:text-gray-500 hover:border-primary focus-visible:border-primary focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:bg-gray-200 disabled:hover:border-gray-300',
           error &&
-            'border-error-secondary pe-12 hover:border-error focus-visible:border-error-secondary focus-visible:ring-error-secondary/20 disabled:border-gray-200',
+            'border-error-secondary pe-12 hover:border-error focus-visible:border-error-secondary focus-visible:ring-error-secondary/20 disabled:border-gray-300',
         )}
         ref={ref}
         type={type}

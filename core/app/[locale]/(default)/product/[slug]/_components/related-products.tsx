@@ -35,7 +35,6 @@ export const RelatedProducts = async ({ productId }: Props) => {
   // const t = await getTranslations('Product.Carousel');
 
   const customerId = await getSessionCustomerId();
-  console.log("related productId", productId)
 
   const { data } = await client.fetch({
     document: RelatedProductsQuery,
@@ -45,13 +44,11 @@ export const RelatedProducts = async ({ productId }: Props) => {
   });
 
   const product = data.site.product;
-  console.log("related lsdklsf", product)
 
   if (!product) {
     return null;
   }
   const relatedProducts = removeEdgesAndNodes(product.relatedProducts);
-  console.log("relatedProducts", relatedProducts)
 
   return (
       <ProductCardCarousel

@@ -62,10 +62,7 @@ export const Button = function Button({
         <div
           className={clsx(
             'relative z-50 flex h-full items-center justify-center gap-2 transition-colors text-[#fff]',
-            loading && 'opacity-0',
-            {
-              'mix-blend-difference': variant === 'secondary' || variant === 'tertiary',
-            },
+            loading && 'opacity-0'
           )}
         >
           {children}
