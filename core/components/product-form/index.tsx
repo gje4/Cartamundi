@@ -24,6 +24,7 @@ import { QuantityField } from './fields/quantity-field';
 import { TextField } from './fields/text-field';
 import { ProductFormData, useProductForm } from './use-product-form';
 import React, {useEffect, useState} from "react";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 interface Props {
   data: FragmentOf<typeof ProductItemFragment>;
@@ -60,6 +61,9 @@ export const Submit = ({ data: product }: Props) => {
 };
 
 export const ProductForm = ({ data: product }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const t = useTranslations('Product.Form');
   const m = useTranslations('AddToCart');
   const productOptions = removeEdgesAndNodes(product.productOptions);
@@ -127,7 +131,14 @@ export const ProductForm = ({ data: product }: Props) => {
     );
   };
 
-  const [checked, setChecked] = useState<number>(0);
+  let defaultChecked = 0;
+  if(searchParams) {
+    let subscribeAndSavePreset = searchParams.get("sns");
+    defaultChecked = subscribeAndSavePreset !== undefined && subscribeAndSavePreset !== null ? Number(subscribeAndSavePreset) : 0;
+  }
+
+
+  const [checked, setChecked] = useState<number>(defaultChecked);
   const [bundleAndSaveOpen, setBundleAndSaveOpen] = useState(false);
 
   function toggleBundleAndSave(open:boolean) {
@@ -135,8 +146,16 @@ export const ProductForm = ({ data: product }: Props) => {
       recalculateKlarna(open);
   }
 
-  function inputCheck(index: number) {
+  function inputCheck(index: number, prefetch:boolean = false) {
       setChecked(index);
+      const optionSearchParams = new URLSearchParams(searchParams.toString());
+      optionSearchParams.set("sns", String(index));
+      const newUrl = `${pathname}?${optionSearchParams.toString()}`;
+      if (prefetch) {
+        router.prefetch(newUrl);
+      } else {
+        router.replace(newUrl, { scroll: false });
+      }
       toggleBundleAndSave(index === 1);
   }
 
@@ -222,7 +241,6 @@ export const ProductForm = ({ data: product }: Props) => {
           return null;
         })}
         <div className={`st_custom-radio-button`}>
-          "checked: " {checked}
           <div>
             <label className={`st_radio-label_JS ${0 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="one_time_save">
               <input
@@ -300,7 +318,7 @@ export const ProductForm = ({ data: product }: Props) => {
             productOptions.map((option) => {
               let subscribeAndSave = true;
               if (option.__typename === 'MultipleChoiceOption') {
-                return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} />;
+                return <div className="pb-2"><MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} /></div>;
               }
             })
           }
