@@ -11,8 +11,9 @@ export const RemoveFromCartButton = () => {
 
   return (
     <Button
-      className="st_cart_remove_button w-auto items-center p-0 text-primary hover:bg-transparent disabled:text-primary disabled:hover:text-primary"
+      className="st_cart_button w-auto items-center p-0 text-primary"
       loading={pending}
+      size={"cart_small"}
       loadingText={t('spinnerText')}
       type="submit"
         // @ts-ignore

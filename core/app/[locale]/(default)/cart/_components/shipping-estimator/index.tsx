@@ -66,6 +66,7 @@ export const ShippingEstimator = ({ checkout, shippingCountries }: Props) => {
             <Button
               aria-controls="shipping-options"
               className="st_cart_button w-fit p-0 text-primary"
+              size={"cart_small"}
               onClick={() => setShowShippingInfo((open) => !open)}
                 // @ts-ignore
               variant="subtle"
@@ -81,6 +82,7 @@ export const ShippingEstimator = ({ checkout, shippingCountries }: Props) => {
             <Button
               aria-controls="shipping-options"
               className="st_cart_button w-fit p-0 text-primary"
+              size={"cart_small"}
               onClick={() => setShowShippingInfo((open) => !open)}
                 // @ts-ignore
               variant="primary"

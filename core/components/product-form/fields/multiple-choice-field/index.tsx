@@ -54,12 +54,12 @@ export const MultipleChoiceField = ({ option, subscribeAndSave, bundleAndSave }:
   const selectedValue = values.find((value) => value.isSelected)?.entityId.toString();
   const defaultValue = values.find((value) => value.isDefault)?.entityId.toString();
 
-  const bundleAndSaveOnly = option.displayName.indexOf("---bundle-and-save---") > -1;
-  const subscribeOnly = option.displayName.indexOf("---subscribe-only---") > -1;
+  const bundleAndSaveOnly = option.displayName.indexOf("[B&S] ") > -1;
+  const subscribeOnly = option.displayName.indexOf("[S&S] ") > -1;
   const shouldShow = (subscribeAndSave && subscribeOnly)
       || (bundleAndSave && bundleAndSaveOnly)
       || (!subscribeAndSave && !bundleAndSave && !bundleAndSaveOnly && !subscribeOnly);
-  let displayName = option.displayName.replace("---subscribe-only---", "").replace("---bundle-and-save---", "");
+  let displayName = option.displayName.replace("[S&S] ", "").replace("[B&S] ", "");
 
   const { field, fieldState } = useProductFieldController({
     name: `attribute_${option.entityId}`,

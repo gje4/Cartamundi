@@ -13,7 +13,7 @@ const InternalButton = () => {
 
   return (
       // @ts-ignore
-      <Button className="mt-6" loading={pending} loadingText={t('loading')}>
+      <Button className="mt-6" size={"large"} loading={pending} loadingText={t('loading')}>
       {t('proceedToCheckout')}
     </Button>
   );

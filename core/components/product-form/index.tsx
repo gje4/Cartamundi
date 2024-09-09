@@ -176,7 +176,7 @@ export const ProductForm = ({ data: product }: Props) => {
     let output = false;
     for(let i=0; i< productOptions.length; i++) {
       let option = productOptions[i];
-      if (option.displayName.indexOf("---subscribe-only---") > -1) {
+      if (option.displayName.indexOf("[S&S] ") > -1) {
         output = true;
         break;
       }
@@ -187,7 +187,7 @@ export const ProductForm = ({ data: product }: Props) => {
     let output = false;
     for(let i=0; i< productOptions.length; i++) {
       let option = productOptions[i];
-      if (option.displayName.indexOf("---bundle-and-save---") > -1) {
+      if (option.displayName.indexOf("[B&S] ") > -1) {
         output = true;
         break;
       }
@@ -264,7 +264,7 @@ export const ProductForm = ({ data: product }: Props) => {
 
         <div className="st_purchase_frequency">
           <div>
-            <h2 className="st_sns_header">Purchase Frequency Options</h2>
+            <h2 className="st_sns_header">Frequency Options</h2>
             <h4 className="st_sns_subheader">Buy this product once or get it monthly with additional benefits!</h4>
           </div>
           <div className={`st_custom-radio-button mb-[20px]`}>
@@ -346,7 +346,7 @@ export const ProductForm = ({ data: product }: Props) => {
           <div>
             <h2 className="st_sns_header">Get Products at Discount With Subscribe & Save!</h2>
             <h4 className="st_sns_subheader">If you buy this bundle with a subscription active, you can include up to
-              3 products at super discount!</h4>
+              3 products at a super discount!</h4>
           </div>
           {
             productOptions.map((option) => {

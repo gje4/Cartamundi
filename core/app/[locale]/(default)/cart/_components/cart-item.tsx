@@ -177,7 +177,7 @@ export const CartItem = async ({ currencyCode, product }: Props) => {
                       case 'CartSelectedMultipleChoiceOption':
                         return (
                           <div key={selectedOption.entityId}>
-                            <span>{selectedOption.name}:</span>{' '}
+                            <span>{selectedOption.name.replace("[S&S] ", "").replace("[B&S] ", "")}:</span>{' '}
                             <span className="font-semibold">{selectedOption.value}</span>
                           </div>
                         );

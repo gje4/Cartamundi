@@ -4,7 +4,7 @@ import { Loader2 } from 'lucide-react';
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'default' | 'small';
+  size?: 'default' | 'small' | 'large' | 'cart_small';
   onClick?: () => void;
   loading?: boolean;
   asChild?: boolean;
@@ -35,8 +35,11 @@ export const Button = function Button({
           tertiary: 'bg-background text-background ring-primary hover:border-background',
         }[variant],
         {
+          large: 'px-[26px] py-[10px] text-sm',
+          cart_small: 'px-[13px] py-[3px] text-sm',
           default: 'px-6 py-[13px] text-base',
-          small: 'px-4 py-2 text-sm',
+          small: 'px-4 py-2 text-sm'
+
         }[size],
         // After Pseudo Element / Animated Background Styles
         'after:absolute after:inset-0 after:z-0 after:h-full after:w-full after:rounded-full',
