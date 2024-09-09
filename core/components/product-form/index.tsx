@@ -139,10 +139,10 @@ export const ProductForm = ({ data: product }: Props) => {
 
 
   const [checked, setChecked] = useState<number>(defaultChecked);
-  const [bundleAndSaveOpen, setBundleAndSaveOpen] = useState(false);
+  const [subscribeAndSaveBonusItemsOpen, setSubscribeAndSaveBonusItemsOpen] = useState(false);
 
-  function toggleBundleAndSave(open:boolean) {
-      setBundleAndSaveOpen(open);
+  function toggleSubscribeAndSaveBonusItems(open:boolean) {
+      setSubscribeAndSaveBonusItemsOpen(open);
       recalculateKlarna(open);
   }
 
@@ -156,7 +156,7 @@ export const ProductForm = ({ data: product }: Props) => {
       } else {
         router.replace(newUrl, { scroll: false });
       }
-      toggleBundleAndSave(index === 1);
+      toggleSubscribeAndSaveBonusItems(index === 1);
   }
 
   useEffect(() => {
@@ -176,8 +176,18 @@ export const ProductForm = ({ data: product }: Props) => {
     let output = false;
     for(let i=0; i< productOptions.length; i++) {
       let option = productOptions[i];
-      let subscribeOnly = option.displayName.indexOf("---subscribe-only---") > -1;
-      if (subscribeOnly) {
+      if (option.displayName.indexOf("---subscribe-only---") > -1) {
+        output = true;
+        break;
+      }
+    }
+    return output;
+  }
+  function hasAtLeastOneBundleAndSave():boolean {
+    let output = false;
+    for(let i=0; i< productOptions.length; i++) {
+      let option = productOptions[i];
+      if (option.displayName.indexOf("---bundle-and-save---") > -1) {
         output = true;
         break;
       }
@@ -212,90 +222,109 @@ export const ProductForm = ({ data: product }: Props) => {
       <form className="flex flex-col gap-6 @container" onSubmit={handleSubmit(productFormSubmit)}>
         <input type="hidden" value={product.entityId} {...register('product_id')} />
 
-        {productOptions.map((option) => {
-          let subscribeAndSave = false;
-          if (option.__typename === 'MultipleChoiceOption') {
-            return <MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} />;
-          }
+          {productOptions.map((option) => {
+              if (option.__typename === 'MultipleChoiceOption') {
+                return <MultipleChoiceField key={option.entityId} option={option} bundleAndSave={false} subscribeAndSave={false} />;
+              }
 
-          if (option.__typename === 'CheckboxOption') {
-            return <CheckboxField key={option.entityId} option={option} />;
-          }
+              if (option.__typename === 'CheckboxOption') {
+                return <CheckboxField key={option.entityId} option={option} />;
+              }
 
-          if (option.__typename === 'NumberFieldOption') {
-            return <NumberField key={option.entityId} option={option} />;
-          }
+              if (option.__typename === 'NumberFieldOption') {
+                return <NumberField key={option.entityId} option={option} />;
+              }
 
-          if (option.__typename === 'MultiLineTextFieldOption') {
-            return <MultiLineTextField key={option.entityId} option={option} />;
-          }
+              if (option.__typename === 'MultiLineTextFieldOption') {
+                return <MultiLineTextField key={option.entityId} option={option} />;
+              }
 
-          if (option.__typename === 'TextFieldOption') {
-            return <TextField key={option.entityId} option={option} />;
-          }
+              if (option.__typename === 'TextFieldOption') {
+                return <TextField key={option.entityId} option={option} />;
+              }
 
-          if (option.__typename === 'DateFieldOption') {
-            return <DateField key={option.entityId} option={option} />;
-          }
+              if (option.__typename === 'DateFieldOption') {
+                return <DateField key={option.entityId} option={option} />;
+              }
+            return null;
+          })}
 
-          return null;
-        })}
-        <div className={`st_custom-radio-button`}>
+        {(hasAtLeastOneBundleAndSave() && (<div className="st_bundle-and-save-options">
           <div>
-            <label className={`st_radio-label_JS ${0 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="one_time_save">
-              <input
-                  className="st_radio-input_JS"
-                  type="radio"
-                  name="subscribe_and_save"
-                  id="one_time_save"
-                  checked={0 === checked}
-                  onChange={() => inputCheck(0)}
-              />
-              <span className="st_circle"></span>
-              <span>One-Time-Purchase</span>
-              <span className="ml-auto st_price">{(hasVolumes() && (<span className="st_volume">(PV: {PV})</span> ))} ${basePrice}</span>
-            </label>
+            <h2 className="st_sns_header">Bundle & Save!</h2>
+            <h4 className="st_sns_subheader">This bundle offers additional products at a very high discount!</h4>
           </div>
+          {productOptions.map((option) => {
+            if (option.__typename === 'MultipleChoiceOption') {
+              return <MultipleChoiceField key={option.entityId} option={option} bundleAndSave={true} subscribeAndSave={false} />;
+            }
+          })}
+        </div>))
+        }
+
+        <div className="st_purchase_frequency">
           <div>
-            <label className={`st_radio-label_JS ${1 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="subscribe_save">
-              <input
-                  className="st_radio-input_JS"
-                  type="radio"
-                  name="subscribe_and_save"
-                  id="subscribe_save"
-                  checked={1 === checked}
-                  onChange={() => inputCheck(1)}
-              />
-              <span className="st_circle"></span>
-              <span className="flex flex-col">
-                <span>Subscribe & Save 10%</span>
-              </span>
-              <span className="ml-auto flex items-center gap-[6px]">
-                {(hasVolumes() && (<span className="st_volume">(PV: {SSPV})</span>))}
-                <span className="st_price line-through">${basePrice}</span>
-                <span className="st_price font-bold">${discountedPrice}</span>
-              </span>
-            </label>
+            <h2 className="st_sns_header">Purchase Frequency Options</h2>
+            <h4 className="st_sns_subheader">Buy this product once or get it monthly with additional benefits!</h4>
           </div>
-        </div>
-        <div className="flex items-center gap-[12px] border-t border-t-[#ffa8cd] px-[10px] py-[20px]">
-          <div>
-            <svg role="img" xmlns="http://www.w3.org/2000/svg" width="71.25" height="30"
-                 viewBox="0 0 71.25 30" aria-label="Klarna" version="2.1">
-              <g clip-path="url(#a)">
-                <path fill="#FFA8CD"
-                      d="M62.7688 0H8.48123C3.79718 0 0 3.79718 0 8.48123V21.5188C0 26.2028 3.79718 30 8.48123 30H62.7688c4.684 0 8.4812-3.7972 8.4812-8.4812V8.48123C71.25 3.79718 67.4528 0 62.7688 0Z"></path>
-                <path fill="#0B051D"
-                      d="M57.412 19.1418c-1.2436 0-2.2134-1.0286-2.2134-2.2776 0-1.2491.9698-2.2776 2.2134-2.2776 1.2441 0 2.2135 1.0285 2.2135 2.2776 0 1.249-.9694 2.2776-2.2135 2.2776Zm-.6215 2.4062c1.0608 0 2.4145-.4041 3.1645-1.9837l.0731.0367c-.329.8633-.329 1.3776-.329 1.5062v.202h2.6704v-8.8901h-2.6704v.2021c0 .1286 0 .6428.329 1.5061l-.0731.0368c-.75-1.5797-2.1037-1.9838-3.1645-1.9838-2.543 0-4.3355 2.0205-4.3355 4.6839 0 2.6633 1.7925 4.6838 4.3355 4.6838Zm-8.9822-9.3677c-1.2073 0-2.1586.4225-2.9268 1.9838l-.0732-.0368c.3292-.8633.3292-1.3775.3292-1.5061v-.2021h-2.6708v8.8901h2.744v-4.6838c0-1.2307.7134-2.0021 1.8659-2.0021 1.1526 0 1.7193.6612 1.7193 1.9837v4.7022H51.54v-5.6573c0-2.0205-1.5731-3.4716-3.7317-3.4716Zm-9.3112 1.9838-.0731-.0368c.3293-.8633.3293-1.3775.3293-1.5061v-.2021h-2.6708v8.8901h2.7439l.0183-4.2797c0-1.249.6586-2.0021 1.7379-2.0021.2926 0 .5305.0367.8048.1102v-2.7185c-1.2073-.2571-2.2866.2021-2.8903 1.745Zm-8.7257 4.9777c-1.244 0-2.2135-1.0286-2.2135-2.2776 0-1.2491.9695-2.2776 2.2135-2.2776 1.2439 0 2.2134 1.0285 2.2134 2.2776 0 1.249-.9695 2.2776-2.2134 2.2776Zm-.622 2.4062c1.061 0 2.4147-.4041 3.1647-1.9837l.0732.0367c-.3293.8633-.3293 1.3776-.3293 1.5062v.202h2.6708v-8.8901H32.058v.2021c0 .1286 0 .6428.3293 1.5061l-.0732.0368c-.75-1.5797-2.1037-1.9838-3.1647-1.9838-2.5428 0-4.3355 2.0205-4.3355 4.6839 0 2.6633 1.7927 4.6838 4.3355 4.6838Zm-8.1588-.2388h2.744V8.45166h-2.744V21.3092ZM18.9784 8.45166h-2.7988c0 2.29594-1.4086 4.35314-3.5489 5.82264l-.8415.5878V8.45166H8.88062V21.3092h2.90858v-6.3736l4.8111 6.3736h3.5489L15.521 15.211c2.1037-1.5245 3.4757-3.894 3.4574-6.75934Z"></path>
-              </g>
-              <defs>
-                <clipPath id="a">
-                  <path fill="#fff" d="M0 0h71.25v30H0z"></path>
-                </clipPath>
-              </defs>
-            </svg>
+          <div className={`st_custom-radio-button mb-[20px]`}>
+            <div>
+              <label className={`st_radio-label_JS ${0 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="one_time_save">
+                <input
+                    className="st_radio-input_JS"
+                    type="radio"
+                    name="subscribe_and_save"
+                    id="one_time_save"
+                    checked={0 === checked}
+                    onChange={() => inputCheck(0)}
+                />
+                <span className="st_circle"></span>
+                <span>One-Time-Purchase</span>
+                <span className="ml-auto st_price">{(hasVolumes() && (
+                    <span className="st_volume">(PV: {PV})</span>))} ${basePrice}</span>
+              </label>
+            </div>
+            <div>
+              <label className={`st_radio-label_JS ${1 === checked ? 'bg-[#dddae8]' : ''}`} htmlFor="subscribe_save">
+                <input
+                    className="st_radio-input_JS"
+                    type="radio"
+                    name="subscribe_and_save"
+                    id="subscribe_save"
+                    checked={1 === checked}
+                    onChange={() => inputCheck(1)}
+                />
+                <span className="st_circle"></span>
+                <span className="flex flex-col">
+                  <span>Subscribe & Save 10%</span>
+                </span>
+                <span className="ml-auto flex items-center gap-[6px]">
+                  {(hasVolumes() && (<span className="st_volume">(PV: {SSPV})</span>))}
+                  <span className="st_price line-through">${basePrice}</span>
+                  <span className="st_price font-bold">${discountedPrice}</span>
+                </span>
+              </label>
+            </div>
           </div>
-          <div>4 Interest-Free Payments of <span>${klarnaInstallment}.</span></div>
+          <div className="flex items-center gap-[12px] border-t border-t-[#ffa8cd] px-[10px] py-[20px]">
+            <div>
+              <svg role="img" xmlns="http://www.w3.org/2000/svg" width="71.25" height="30"
+                   viewBox="0 0 71.25 30" aria-label="Klarna" version="2.1">
+                <g clip-path="url(#a)">
+                  <path fill="#FFA8CD"
+                        d="M62.7688 0H8.48123C3.79718 0 0 3.79718 0 8.48123V21.5188C0 26.2028 3.79718 30 8.48123 30H62.7688c4.684 0 8.4812-3.7972 8.4812-8.4812V8.48123C71.25 3.79718 67.4528 0 62.7688 0Z"></path>
+                  <path fill="#0B051D"
+                        d="M57.412 19.1418c-1.2436 0-2.2134-1.0286-2.2134-2.2776 0-1.2491.9698-2.2776 2.2134-2.2776 1.2441 0 2.2135 1.0285 2.2135 2.2776 0 1.249-.9694 2.2776-2.2135 2.2776Zm-.6215 2.4062c1.0608 0 2.4145-.4041 3.1645-1.9837l.0731.0367c-.329.8633-.329 1.3776-.329 1.5062v.202h2.6704v-8.8901h-2.6704v.2021c0 .1286 0 .6428.329 1.5061l-.0731.0368c-.75-1.5797-2.1037-1.9838-3.1645-1.9838-2.543 0-4.3355 2.0205-4.3355 4.6839 0 2.6633 1.7925 4.6838 4.3355 4.6838Zm-8.9822-9.3677c-1.2073 0-2.1586.4225-2.9268 1.9838l-.0732-.0368c.3292-.8633.3292-1.3775.3292-1.5061v-.2021h-2.6708v8.8901h2.744v-4.6838c0-1.2307.7134-2.0021 1.8659-2.0021 1.1526 0 1.7193.6612 1.7193 1.9837v4.7022H51.54v-5.6573c0-2.0205-1.5731-3.4716-3.7317-3.4716Zm-9.3112 1.9838-.0731-.0368c.3293-.8633.3293-1.3775.3293-1.5061v-.2021h-2.6708v8.8901h2.7439l.0183-4.2797c0-1.249.6586-2.0021 1.7379-2.0021.2926 0 .5305.0367.8048.1102v-2.7185c-1.2073-.2571-2.2866.2021-2.8903 1.745Zm-8.7257 4.9777c-1.244 0-2.2135-1.0286-2.2135-2.2776 0-1.2491.9695-2.2776 2.2135-2.2776 1.2439 0 2.2134 1.0285 2.2134 2.2776 0 1.249-.9695 2.2776-2.2134 2.2776Zm-.622 2.4062c1.061 0 2.4147-.4041 3.1647-1.9837l.0732.0367c-.3293.8633-.3293 1.3776-.3293 1.5062v.202h2.6708v-8.8901H32.058v.2021c0 .1286 0 .6428.3293 1.5061l-.0732.0368c-.75-1.5797-2.1037-1.9838-3.1647-1.9838-2.5428 0-4.3355 2.0205-4.3355 4.6839 0 2.6633 1.7927 4.6838 4.3355 4.6838Zm-8.1588-.2388h2.744V8.45166h-2.744V21.3092ZM18.9784 8.45166h-2.7988c0 2.29594-1.4086 4.35314-3.5489 5.82264l-.8415.5878V8.45166H8.88062V21.3092h2.90858v-6.3736l4.8111 6.3736h3.5489L15.521 15.211c2.1037-1.5245 3.4757-3.894 3.4574-6.75934Z"></path>
+                </g>
+                <defs>
+                  <clipPath id="a">
+                    <path fill="#fff" d="M0 0h71.25v30H0z"></path>
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div>4 Interest-Free Payments of <span>${klarnaInstallment}.</span></div>
+          </div>
         </div>
 
         {/*<div className="st_subscribe-and-save">
@@ -313,12 +342,16 @@ export const ProductForm = ({ data: product }: Props) => {
           </label>
         </div>*/}
 
-        {(bundleAndSaveOpen && hasAtLeastOneSubscribe() && (<div className="st_subscribe-and-save-options">
+        {(subscribeAndSaveBonusItemsOpen && hasAtLeastOneSubscribe() && (<div className="st_subscribe-and-save-options">
+          <div>
+            <h2 className="st_sns_header">Get Products at Discount With Subscribe & Save!</h2>
+            <h4 className="st_sns_subheader">If you buy this bundle with a subscription active, you can include up to
+              3 products at super discount!</h4>
+          </div>
           {
             productOptions.map((option) => {
-              let subscribeAndSave = true;
               if (option.__typename === 'MultipleChoiceOption') {
-                return <div className="pb-2"><MultipleChoiceField key={option.entityId} option={option} subscribeAndSave={subscribeAndSave} /></div>;
+                return <div><MultipleChoiceField key={option.entityId} option={option} bundleAndSave={false} subscribeAndSave={true}/></div>;
               }
             })
           }

@@ -12,6 +12,7 @@ import { MultipleChoiceFieldFragment } from './fragment';
 interface Props {
   option: FragmentOf<typeof MultipleChoiceFieldFragment>;
   subscribeAndSave:boolean;
+  bundleAndSave:boolean;
 }
 
 interface InteractionOptions {
@@ -20,7 +21,7 @@ interface InteractionOptions {
   prefetch?: boolean;
 }
 
-export const MultipleChoiceField = ({ option, subscribeAndSave }: Props) => {
+export const MultipleChoiceField = ({ option, subscribeAndSave, bundleAndSave }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -53,9 +54,12 @@ export const MultipleChoiceField = ({ option, subscribeAndSave }: Props) => {
   const selectedValue = values.find((value) => value.isSelected)?.entityId.toString();
   const defaultValue = values.find((value) => value.isDefault)?.entityId.toString();
 
+  const bundleAndSaveOnly = option.displayName.indexOf("---bundle-and-save---") > -1;
   const subscribeOnly = option.displayName.indexOf("---subscribe-only---") > -1;
-  const shouldShow = subscribeAndSave === subscribeOnly;
-  let displayName = option.displayName.replace("---subscribe-only---", "");
+  const shouldShow = (subscribeAndSave && subscribeOnly)
+      || (bundleAndSave && bundleAndSaveOnly)
+      || (!subscribeAndSave && !bundleAndSave && !bundleAndSaveOnly && !subscribeOnly);
+  let displayName = option.displayName.replace("---subscribe-only---", "").replace("---bundle-and-save---", "");
 
   const { field, fieldState } = useProductFieldController({
     name: `attribute_${option.entityId}`,
@@ -206,8 +210,8 @@ export const MultipleChoiceField = ({ option, subscribeAndSave }: Props) => {
     case 'ProductPickList':
     case 'ProductPickListWithImages':
       return (
-          (shouldShow && (<div key={option.entityId}>
-          <Label className="mb-2 inline-block font-semibold" id={`label-${option.entityId}`}>
+          (shouldShow && (<div key={option.entityId} className="st_single_option_wrapper">
+          <Label className="font-semibold st_single_option_label" id={`label-${option.entityId}`}>
             {displayName}
           </Label>
           <PickList

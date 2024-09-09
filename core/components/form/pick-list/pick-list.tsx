@@ -38,7 +38,7 @@ const PickList = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, Props>(
 
           return (
             <div
-              className="flex items-center p-4"
+              className="flex items-center p-0.5"
               key={`${id}-${value}`}
               onMouseEnter={onMouseEnter}
             >

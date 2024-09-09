@@ -53,15 +53,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-color-light);
 }
 .st_radio-buttons--wrapper button {
-  min-width: 24px;
-  min-height: 24px;
+  min-width: 18px;
+  min-height: 18px;
 }
 .st_radio-buttons--wrapper button[data-state="checked"] {
   border: 1px solid var(--primary-color);
   span {
     background-color: var(--primary-color);
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     display: block;
   }
 }
@@ -343,4 +343,55 @@ h1,h2,h3,h4,h5,h6 {
 
 .st_header {
   z-index:100000;
+}
+
+.st_sns_header {
+  font-size:22px;
+}
+
+.st_sns_subheader {
+  font-size:14px;
+  font-weight:normal;
+  font-style:italic;
+  margin-bottom:20px;
+}
+
+.st_bundle-and-save-options,
+.st_subscribe-and-save-options {
+  padding: 20px;
+  border: 2px dashed var(--primary-color-light);
+  border-radius: 10px;
+  background: rgba(82,45,114,0.1);
+}
+
+.st_bundle-and-save-options .st_single_radio_option,
+.st_subscribe-and-save-options .st_single_radio_option {
+  padding:5px 20px;
+  background: #fff;
+}
+
+.st_bundle-and-save-options .st_single_radio_option label,
+.st_subscribe-and-save-options .st_single_radio_option label {
+  font-size:14px;
+}
+
+.st_bundle-and-save-options .st_single_option_wrapper,
+.st_subscribe-and-save-options .st_single_option_wrapper {
+  border: 1px solid var(--primary-color);
+  margin-bottom:10px;
+  overflow: hidden;
+  border-radius: 5px;
+
+}
+
+.st_bundle-and-save-options .st_single_option_wrapper .st_single_option_label,
+.st_subscribe-and-save-options .st_single_option_wrapper .st_single_option_label {
+  color: #fff;
+  background-color: var(--primary-color);
+  padding:6px 6px 6px 20px;
+  display: block;
+  width: 100%;
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
